@@ -1,0 +1,5 @@
+C:/Users/Blade/OneDrive/Escritorio/Moviles_ProyectoFinal/.utmp/RelWithDebInfo/4qb6w6xk/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/Blade/OneDrive/Escritorio/Moviles_ProyectoFinal/.utmp/RelWithDebInfo/4qb6w6xk/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Users/Blade/OneDrive/Escritorio/Moviles_ProyectoFinal/.utmp/RelWithDebInfo/4qb6w6xk/arm64-v8a/GameActivity/CMakeFiles/game.dir
+C:/Users/Blade/OneDrive/Escritorio/Moviles_ProyectoFinal/.utmp/RelWithDebInfo/4qb6w6xk/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Users/Blade/OneDrive/Escritorio/Moviles_ProyectoFinal/.utmp/RelWithDebInfo/4qb6w6xk/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
