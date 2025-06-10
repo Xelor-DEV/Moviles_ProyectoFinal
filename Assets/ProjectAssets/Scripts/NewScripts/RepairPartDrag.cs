@@ -7,65 +7,142 @@ public class RepairPartDrag : MonoBehaviour
     private Vector3 offset;
     private Vector3 originalPosition;
 
-    public float repairRate = 0.1f; // Armadura reparada por segundo
-    public float scrapConsumptionRate = 1f; // Chatarra consumida por segundo
+    public float repairRate = 0.1f;
+    public float scrapConsumptionRate = 1f;
     public float returnSpeed = 5f;
     public float repairDistance = 1.5f;
+
+    [Header("VFX & SFX")]
+    public ParticleSystem weldingParticles;
+    public Transform weldingTarget;
+    public AudioSource weldingSound;
 
     private Camera mainCamera;
     private RobotStats currentRobot;
     private float repairTimer = 0f;
     private float scrapAccumulator = 0f;
+    private bool effectsActive = false;
+    private bool hadSufficientScrapLastFrame = true;
 
     void Start()
     {
         mainCamera = Camera.main;
         originalPosition = transform.position;
+
+        // Configuración inicial de partículas y sonido
+        if (weldingParticles != null)
+        {
+            weldingParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+        if (weldingSound != null)
+        {
+            weldingSound.Stop();
+            weldingSound.loop = true;
+        }
     }
 
     void Update()
     {
         HandleTouchInput();
 
+        bool hasSufficientScrap = false;
+        bool shouldRepair = false;
+
         // Manejar la reparación continua
         if (isRepairing && currentRobot != null)
         {
-            repairTimer += Time.deltaTime;
+            // Verificar si hay al menos 1 de chatarra
+            hasSufficientScrap = currentRobot.CanRepair(1);
 
-            // Calcular la reparación y consumo de chatarra
-            float repairThisFrame = repairRate * Time.deltaTime;
-            scrapAccumulator += scrapConsumptionRate * Time.deltaTime;
-
-            // Aplicar reparación cuando acumulamos suficiente chatarra
-            if (scrapAccumulator >= 1f)
+            if (hasSufficientScrap)
             {
-                int scrapToConsume = Mathf.FloorToInt(scrapAccumulator);
-                if (currentRobot.CanRepair(scrapToConsume))
+                repairTimer += Time.deltaTime;
+
+                // Calcular la reparación y consumo de chatarra
+                float repairThisFrame = repairRate * Time.deltaTime;
+                scrapAccumulator += scrapConsumptionRate * Time.deltaTime;
+
+                // Aplicar reparación cuando acumulamos suficiente chatarra
+                if (scrapAccumulator >= 1f)
                 {
-                    currentRobot.RepairArmor(repairThisFrame * scrapToConsume, scrapToConsume);
-                    scrapAccumulator -= scrapToConsume;
+                    int scrapToConsume = Mathf.FloorToInt(scrapAccumulator);
+                    if (currentRobot.CanRepair(scrapToConsume))
+                    {
+                        currentRobot.RepairArmor(repairThisFrame * scrapToConsume, scrapToConsume);
+                        scrapAccumulator -= scrapToConsume;
+                        shouldRepair = true;
+                    }
                 }
                 else
                 {
-                    // No hay suficiente chatarra, detener reparación
-                    isRepairing = false;
+                    // Reparación parcial sin consumir chatarra aún
+                    currentRobot.RepairArmor(repairThisFrame, 0);
+                    shouldRepair = true;
                 }
             }
-            else
+        }
+
+        // Control de efectos de reparación
+        bool shouldShowEffects = isRepairing && currentRobot != null && shouldRepair;
+
+        // Solo activar efectos si podemos reparar realmente
+        if (shouldShowEffects)
+        {
+            if (!effectsActive || !hadSufficientScrapLastFrame)
             {
-                // Reparación parcial sin consumir chatarra aún
-                currentRobot.RepairArmor(repairThisFrame, 0);
+                StartRepairEffects();
+            }
+
+            // Mover partículas al objetivo
+            if (weldingTarget != null)
+            {
+                weldingParticles.transform.position = weldingTarget.position;
             }
         }
-        else
+        else if (effectsActive)
         {
-            scrapAccumulator = 0f; // Resetear acumulador si no estamos reparando
+            StopRepairEffects();
         }
+
+        // Guardar estado para el próximo frame
+        hadSufficientScrapLastFrame = shouldRepair;
 
         // Regresar a posición original si no estamos arrastrando
         if (!isDragging && !isRepairing && Vector3.Distance(transform.position, originalPosition) > 0.01f)
         {
             transform.position = Vector3.Lerp(transform.position, originalPosition, returnSpeed * Time.deltaTime);
+        }
+    }
+
+    void StartRepairEffects()
+    {
+        effectsActive = true;
+
+        if (weldingParticles != null)
+        {
+            weldingParticles.Play();
+        }
+
+        if (weldingSound != null)
+        {
+            weldingSound.Stop();
+            weldingSound.time = 0;
+            weldingSound.Play();
+        }
+    }
+
+    void StopRepairEffects()
+    {
+        effectsActive = false;
+
+        if (weldingParticles != null)
+        {
+            weldingParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
+
+        if (weldingSound != null && weldingSound.isPlaying)
+        {
+            weldingSound.Stop();
         }
     }
 
@@ -84,7 +161,8 @@ public class RepairPartDrag : MonoBehaviour
                     {
                         isDragging = true;
                         offset = transform.position - hit.point;
-                        isRepairing = false; // Resetear estado de reparación
+                        isRepairing = false;
+                        StopRepairEffects();
                     }
                     break;
 
@@ -103,7 +181,8 @@ public class RepairPartDrag : MonoBehaviour
                     if (isDragging)
                     {
                         isDragging = false;
-                        isRepairing = false; // Detener reparación al soltar
+                        isRepairing = false;
+                        StopRepairEffects();
                     }
                     break;
             }
