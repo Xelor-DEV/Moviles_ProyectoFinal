@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Alien
   - Robot
+  - Ground
+  - Obstacle
+  - Target
   layers:
   - Default
   - TransparentFX
