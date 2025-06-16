@@ -8,6 +8,7 @@ TagManager:
   - Robot
   - Ground
   - Obstacle
+  - Target
   layers:
   - Default
   - TransparentFX

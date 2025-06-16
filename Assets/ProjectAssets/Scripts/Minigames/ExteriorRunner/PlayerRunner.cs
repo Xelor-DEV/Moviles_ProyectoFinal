@@ -61,7 +61,8 @@ public class PlayerRunner : MonoBehaviour
     {
         if (other.CompareTag("Obstacle") && gameManager != null)
         {
-            gameManager.GameOver(); 
+            RunnerManager.Instance.ShowGameOverPanel();
+            Time.timeScale = 0f;
         }
     }
 }

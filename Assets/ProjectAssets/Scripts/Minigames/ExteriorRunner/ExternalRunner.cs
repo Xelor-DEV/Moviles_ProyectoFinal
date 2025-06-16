@@ -117,9 +117,5 @@ public class ExternalRunner : MonoBehaviour
         GameObject[] grounds = groundPool.ToArray();
         return grounds[grounds.Length - 1]; 
     }
-    public void GameOver()
-    {
-        Time.timeScale = 0;
-        Debug.Log("Fin del juego");
-    }
+
 }

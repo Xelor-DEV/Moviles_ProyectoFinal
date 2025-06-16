@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class GameUIManager : MonoBehaviour
     public Slider timeSlider;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI coinText;
+
+    [Header("Game Over Panel")]
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TextMeshProUGUI finalCoinsText;
+    [SerializeField] private TextMeshProUGUI finalTimeText;
+    [SerializeField] private Button retryButton;
+    [SerializeField] private Button menuButton;
 
     [Header("Monedas")]
     public CoinData coinData;
@@ -31,6 +39,10 @@ public class GameUIManager : MonoBehaviour
         coinData.ResetCoins();
         currentTime = totalTime;
         UpdateUI();
+        gameOverPanel.SetActive(false);
+
+        retryButton.onClick.AddListener(RestartGame);
+        menuButton.onClick.AddListener(GoToMenu);
     }
 
     void Update()
@@ -54,9 +66,21 @@ public class GameUIManager : MonoBehaviour
         coinText.text = coinData.coins.ToString();
     }
 
+
     public void HandleCorrectSwipe()
     {
-        currentTime += 3;
+        if(currentTime < 97)
+        {
+            currentTime += 3;
+        }
+        if (currentTime < 98)
+        {
+            currentTime += 2;
+        }
+        if (currentTime < 99)
+        {
+            currentTime += 1;
+        }
         correctSwipes++;
 
         if (correctSwipes >= 3)
@@ -75,10 +99,26 @@ public class GameUIManager : MonoBehaviour
             currentTime = 0;
         }
     }
+    void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void GoToMenu()
+    {
+        
+        Debug.Log("Volver al menú principal (puedes cargar otra escena aquí)");
+        // SceneManager.LoadScene("Menu"); 
+    }
 
     void EndGame()
     {
-        Time.timeScale = 0;
+        
         Debug.Log("Tiempo terminado. Juego finalizado.");
+
+        finalCoinsText.text = $"Monedas conseguidas: {coinData.coins}";
+        finalTimeText.text = $"Tiempo sobrevivido: {Mathf.FloorToInt(timeSurvived)}s";
+        gameOverPanel.SetActive(true);
     }
 }
