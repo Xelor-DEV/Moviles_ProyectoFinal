@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed06ebe2b1c97647a1292b44f5d490a, type: 3}
+  m_Name: RobotNeeds
+  m_EditorClassIdentifier: 
+  armor: 0.5
+  power: 0.5
+  fun: 0.5
+  globalDecayRate: 0.01
+  decayInterval: 8
+  armorRepairPerScrap: 0.02
+  minArmorForDamage: 0.2

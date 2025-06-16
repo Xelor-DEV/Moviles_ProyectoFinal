@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d77a6b018a6264cb60521ada3a7e1c, type: 3}
+  m_Name: DragonForm
+  m_EditorClassIdentifier: 
+  skinID: dragon
+  skinName: Dragon Form
+  baseMap: {fileID: 2800000, guid: 3fca872f6577d3a47bedae527dd0d369, type: 3}
+  emissionMap: {fileID: 2800000, guid: b183fd40402e0d943b1179f3fd7f3ef8, type: 3}
+  isUnlocked: 1

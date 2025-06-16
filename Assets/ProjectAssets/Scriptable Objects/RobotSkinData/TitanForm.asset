@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d77a6b018a6264cb60521ada3a7e1c, type: 3}
+  m_Name: TitanForm
+  m_EditorClassIdentifier: 
+  skinID: titan
+  skinName: Titan Form
+  baseMap: {fileID: 2800000, guid: 31bb2cf870ae9fc479c9595560b07c0f, type: 3}
+  emissionMap: {fileID: 2800000, guid: 4ce907b93dda3ab4c932cbf460568bbd, type: 3}
+  isUnlocked: 0
