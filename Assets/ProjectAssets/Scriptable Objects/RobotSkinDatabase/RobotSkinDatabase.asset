@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76db1ba9060b7c849ad09f4c4b8980a0, type: 3}
   m_Name: RobotSkinDatabase
   m_EditorClassIdentifier: 
-  defaultSkin: {fileID: 11400000, guid: 01b81abb9d454e94c8c54f4d1c999d40, type: 2}
-  currentSkin: {fileID: 11400000, guid: 01b81abb9d454e94c8c54f4d1c999d40, type: 2}
+  defaultSkin: {fileID: 11400000, guid: 2cb60bba00644844a9f1be91d87c3f40, type: 2}
+  currentSkin: {fileID: 11400000, guid: 2cb60bba00644844a9f1be91d87c3f40, type: 2}
   allSkins:
   - {fileID: 11400000, guid: 01b81abb9d454e94c8c54f4d1c999d40, type: 2}
   - {fileID: 11400000, guid: 2cb60bba00644844a9f1be91d87c3f40, type: 2}
   - {fileID: 11400000, guid: 2afa8e0d3b571ac4fa779d1f4ba79e07, type: 2}
   - {fileID: 11400000, guid: b2cfd9f9f6f788b4fa9efceb3c4a7301, type: 2}
   unlockedSkins:
-  - {fileID: 11400000, guid: 01b81abb9d454e94c8c54f4d1c999d40, type: 2}
+  - {fileID: 11400000, guid: 2cb60bba00644844a9f1be91d87c3f40, type: 2}
