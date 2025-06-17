@@ -4,7 +4,7 @@ public class ExternalRunner : MonoBehaviour
 {
     public int maxGroundSegments = 3;
     public GameObject groundPrefab; 
-    public float groundLength = 20f;
+    public float groundLength = 30f;
     public float groundSpeed = 5f;
 
     public GameObject obstaclePrefab1;
@@ -19,7 +19,7 @@ public class ExternalRunner : MonoBehaviour
 
         for (int i = 0; i < maxGroundSegments; i++)
         {
-            CreateGroundSegment(i * groundLength);
+            CreateGroundSegment(i * groundLength + 1);
 
         }
     }
