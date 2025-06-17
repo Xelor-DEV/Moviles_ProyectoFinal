@@ -8,7 +8,7 @@ public class GameUIManager : MonoBehaviour
     [Header("Tiempo")]
     public float totalTime = 100f;
     private float currentTime;
-
+    public float timeDecreaseSpeed = 1.5f;
     [Header("UI")]
     public Slider timeSlider;
     public TextMeshProUGUI timeText;
@@ -36,6 +36,7 @@ public class GameUIManager : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1f;
         coinData.ResetCoins();
         currentTime = totalTime;
         UpdateUI();
@@ -47,7 +48,7 @@ public class GameUIManager : MonoBehaviour
 
     void Update()
     {
-        currentTime -= Time.deltaTime;
+        currentTime -= Time.deltaTime * timeDecreaseSpeed;
         timeSurvived += Time.deltaTime;
 
         if (currentTime <= 0)
@@ -63,20 +64,13 @@ public class GameUIManager : MonoBehaviour
     {
         timeSlider.value = currentTime / totalTime;
         timeText.text = Mathf.CeilToInt(currentTime).ToString();
-        coinText.text = coinData.coins.ToString();
+        coinText.text = "Monedas: " + coinData.coins.ToString();
     }
 
 
     public void HandleCorrectSwipe()
     {
-        if(currentTime < 97)
-        {
-            currentTime += 3;
-        }
-        if (currentTime < 98)
-        {
-            currentTime += 2;
-        }
+
         if (currentTime < 99)
         {
             currentTime += 1;
@@ -107,9 +101,8 @@ public class GameUIManager : MonoBehaviour
 
     void GoToMenu()
     {
-        
-        Debug.Log("Volver al menú principal (puedes cargar otra escena aquí)");
-        // SceneManager.LoadScene("Menu"); 
+
+        SceneManager.LoadScene("Workshop");
     }
 
     void EndGame()
@@ -120,5 +113,6 @@ public class GameUIManager : MonoBehaviour
         finalCoinsText.text = $"Monedas conseguidas: {coinData.coins}";
         finalTimeText.text = $"Tiempo sobrevivido: {Mathf.FloorToInt(timeSurvived)}s";
         gameOverPanel.SetActive(true);
+        Time.timeScale = 0f;
     }
 }

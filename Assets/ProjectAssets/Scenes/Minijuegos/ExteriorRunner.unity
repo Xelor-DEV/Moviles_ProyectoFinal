@@ -485,8 +485,9 @@ MonoBehaviour:
   groundPrefab: {fileID: 8751122355239770174, guid: 6952ab0e9002fa64d95f39aaa8d4b35f, type: 3}
   groundLength: 19.2
   groundSpeed: 5
-  obstaclePrefab1: {fileID: 2465246159397602785, guid: 449ad6252f9324f4ea9176f211ec4990, type: 3}
-  obstaclePrefab2: {fileID: 2554342301537621789, guid: 2cb5fbe6f13ff9346be3dccbf67badb7, type: 3}
+  groundHeight: 0.86
+  obstaclePrefab1: {fileID: 2482732568782924967, guid: b240be6f4ae6c5a42beb8a2dd8a268ae, type: 3}
+  obstaclePrefab2: {fileID: 4403503395789573813, guid: 275103eca62c456488f3807ec8a35450, type: 3}
   speedIncreaseInterval: 3
 --- !u!1 &289772308
 GameObject:
@@ -1893,7 +1894,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ec1703119e4b1643b5f69099d1b31f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 40
+  jumpForce: 65
+  fallMultiplier: 3.5
+  lowJumpMultiplier: 2
   isGrounded: 1
   gameManager: {fileID: 268653812}
 --- !u!1 &1233794802
@@ -2460,27 +2463,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a33b65b99c25574cac669d35c3d0a18, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.2864
+      value: -1.21
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a33b65b99c25574cac669d35c3d0a18, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.016
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a33b65b99c25574cac669d35c3d0a18, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6358601
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a33b65b99c25574cac669d35c3d0a18, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a33b65b99c25574cac669d35c3d0a18, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7718044
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a33b65b99c25574cac669d35c3d0a18, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a33b65b99c25574cac669d35c3d0a18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2488,7 +2491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a33b65b99c25574cac669d35c3d0a18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 101.032
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a33b65b99c25574cac669d35c3d0a18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -2929,7 +2932,7 @@ Transform:
   m_GameObject: {fileID: 1737277829}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.09, y: 3.22, z: 0.11}
+  m_LocalPosition: {x: 21.09, y: 4.08, z: -0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3101,7 +3104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7253ada39cba2b344ab4c1c40e358ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupPrefab: {fileID: 6279843240502193813, guid: e7c67cc33d4bae24ea12f3753ce13348, type: 3}
+  pickupPrefab: {fileID: 8904952667566897762, guid: 2d0cb84016bc8dc449a261f862bb5925, type: 3}
   spawnDelay: 5
   spawnPoints:
   - {fileID: 1737277830}

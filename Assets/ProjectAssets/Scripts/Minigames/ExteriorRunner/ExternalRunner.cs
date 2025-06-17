@@ -4,9 +4,9 @@ public class ExternalRunner : MonoBehaviour
 {
     public int maxGroundSegments = 3;
     public GameObject groundPrefab; 
-    public float groundLength = 30f;
+    public float groundLength = 20f;
     public float groundSpeed = 5f;
-
+    public float groundHeight = 0f;
     public GameObject obstaclePrefab1;
     public GameObject obstaclePrefab2;
 
@@ -19,7 +19,7 @@ public class ExternalRunner : MonoBehaviour
 
         for (int i = 0; i < maxGroundSegments; i++)
         {
-            CreateGroundSegment(i * groundLength + 1);
+            CreateGroundSegment(i * groundLength);
 
         }
     }
@@ -55,7 +55,7 @@ public class ExternalRunner : MonoBehaviour
             GameObject lastGround = GetLastGround();
 
             float newX = lastGround.transform.position.x + groundLength;
-            recycledGround.transform.position = new Vector3(newX, 0, 0);
+            recycledGround.transform.position = new Vector3(newX, groundHeight, 0);
             groundPool.Enqueue(recycledGround);
 
             SpawnObstacles(newX);
@@ -63,7 +63,7 @@ public class ExternalRunner : MonoBehaviour
     }
     void CreateGroundSegment(float xPosition)
     {
-        GameObject ground = Instantiate(groundPrefab, new Vector3(xPosition, 0, 0), Quaternion.identity);
+        GameObject ground = Instantiate(groundPrefab, new Vector3(xPosition, groundHeight, 0), Quaternion.identity);
         groundPool.Enqueue(ground);
         SpawnObstacles(xPosition);
     }
@@ -80,33 +80,33 @@ public class ExternalRunner : MonoBehaviour
         if (obstacleType == 1)
         {
            
-            spawnPosition = new Vector3(groundX, 2f, 0);
+            spawnPosition = new Vector3(groundX, 2.27f, 0);
             GameObject o = Instantiate(obstaclePrefab1, spawnPosition, Quaternion.identity);
-            o.transform.localScale = Vector3.one;
+          
             o.AddComponent<ObstacleMover>().speed = groundSpeed;
         }
         else if (obstacleType == 2) 
         {
             
-            spawnPosition = new Vector3(groundX + 10f, 4.5f, 0);
+            spawnPosition = new Vector3(groundX + 10f, 5.36f, 0);
             GameObject o = Instantiate(obstaclePrefab2, spawnPosition, Quaternion.identity);
-            o.transform.localScale = Vector3.one;
+         
             o.AddComponent<ObstacleMover>().speed = groundSpeed;
         }
         else if(obstacleType == 3)
         {
-                spawnPosition = new Vector3(groundX + 10f, 3.5f, 0);
+                spawnPosition = new Vector3(groundX + 10f, 4.36f, 0);
                 GameObject o = Instantiate(obstaclePrefab2, spawnPosition, Quaternion.identity);
-                o.transform.localScale = Vector3.one;
+              
                 o.AddComponent<ObstacleMover>().speed = groundSpeed;
 
 
         }
         else
         {
-            spawnPosition = new Vector3(groundX + 10f, 2f, 0);
+            spawnPosition = new Vector3(groundX + 10f, 2.86f, 0);
             GameObject o = Instantiate(obstaclePrefab2, spawnPosition, Quaternion.identity);
-            o.transform.localScale = Vector3.one;
+          
             o.AddComponent<ObstacleMover>().speed = groundSpeed;
         }
 
