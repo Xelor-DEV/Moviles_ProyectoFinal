@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ProjectAssets/Scenes/Workshop.unity
     guid: 185c8c3b2e4682b4184056f88597e564
+  - enabled: 1
+    path: Assets/ProjectAssets/Scenes/Minijuegos/ExteriorRunner.unity
+    guid: 92977b12bb2e0a94381a2ffb9a242f10
+  - enabled: 1
+    path: Assets/ProjectAssets/Scenes/Minijuegos/RobotWalk.unity
+    guid: 29dca9c33a84b064394eb00979a997ce
+  - enabled: 1
+    path: Assets/ProjectAssets/Scenes/Minijuegos/Punteria.unity
+    guid: f4bd18646bb586246b92ba6e778a86c7
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
