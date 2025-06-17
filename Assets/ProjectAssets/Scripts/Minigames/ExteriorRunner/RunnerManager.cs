@@ -61,7 +61,7 @@ public class RunnerManager : MonoBehaviour
             coinTimer = 0f;
         }
 
-        pickupText.text = $"Recolectados: {counterData.pickupsCollected}";
+        pickupText.text = $"Chatarra: {counterData.pickupsCollected}";
         coinText.text = $"Monedas: {coinData.coins}";
     }
 
@@ -71,7 +71,7 @@ public class RunnerManager : MonoBehaviour
         Time.timeScale = 0f;
 
         finalCoinsText.text = $"Monedas conseguidas: {coinData.coins}";
-        finalPickupsText.text = $"Recolectados: {counterData.pickupsCollected}";
+        finalPickupsText.text = $"Chatarra: {counterData.pickupsCollected}";
         finalTimeText.text = $"Tiempo sobrevivido: {Mathf.FloorToInt(survivalTime)}s";
 
         gameOverPanel.SetActive(true);
@@ -85,7 +85,7 @@ public class RunnerManager : MonoBehaviour
 
     private void GoToMenu()
     {
-        
-        Debug.Log("Escena Menu");
+
+        SceneManager.LoadScene("Workshop");
     }
 }

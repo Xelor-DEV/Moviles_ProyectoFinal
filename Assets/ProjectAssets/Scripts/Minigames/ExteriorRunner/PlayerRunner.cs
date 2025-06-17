@@ -1,17 +1,19 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerRunner : MonoBehaviour
 {
-       [Header("Configuraci�n")]
+       [Header("Configuración")]
  public float jumpForce = 8f;
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2f;
     public bool isGrounded = true;
 
     [Header("Referencias")]
     [SerializeField] private ExternalRunner gameManager; 
     private Rigidbody _comprigidbody;
 
-    private Vector3 tama�oNormal = new Vector3(1, 1, 1);
-    private Vector3 tama�oTransformado = new Vector3(1, 0.6828f, 1);
+    private Vector3 tamañoNormal = new Vector3(1, 1, 1);
+    private Vector3 tamañoTransformado = new Vector3(1, 0.6828f, 1);
     private bool shrinkPressed = false;
     void Awake()
     {
@@ -20,22 +22,30 @@ public class PlayerRunner : MonoBehaviour
 
     private void Update()
     {
-      
-            if (isGrounded)
+        if (isGrounded)
+        {
+            if (shrinkPressed && transform.localScale != tamañoTransformado)
             {
-                if (shrinkPressed && transform.localScale != tama�oTransformado)
-                {
-                    float deltaY = (tama�oNormal.y - tama�oTransformado.y) * 0.5f;
-                    transform.localScale = tama�oTransformado;
-                    transform.position -= new Vector3(0, deltaY, 0);
-                }
-                else if (!shrinkPressed && transform.localScale != tama�oNormal)
-                {
-                    float deltaY = (tama�oNormal.y - tama�oTransformado.y) * 0.5f;
-                    transform.localScale = tama�oNormal;
-                    transform.position += new Vector3(0, deltaY, 0);
-                }
+                float deltaY = (tamañoNormal.y - tamañoTransformado.y) * 0.5f;
+                transform.localScale = tamañoTransformado;
+                transform.position -= new Vector3(0, deltaY, 0);
             }
+            else if (!shrinkPressed && transform.localScale != tamañoNormal)
+            {
+                float deltaY = (tamañoNormal.y - tamañoTransformado.y) * 0.5f;
+                transform.localScale = tamañoNormal;
+                transform.position += new Vector3(0, deltaY, 0);
+            }
+        }
+
+        if (_comprigidbody.linearVelocity.y < 0)
+        {
+            _comprigidbody.linearVelocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+        else if (_comprigidbody.linearVelocity.y > 0) 
+        {
+            _comprigidbody.linearVelocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        }
     }
 
     public void Jump()
@@ -59,7 +69,7 @@ public class PlayerRunner : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Obstacle") && gameManager != null)
+        if (other.gameObject.tag == ("Obstacle") && gameManager != null)
         {
             RunnerManager.Instance.ShowGameOverPanel();
             Time.timeScale = 0f;

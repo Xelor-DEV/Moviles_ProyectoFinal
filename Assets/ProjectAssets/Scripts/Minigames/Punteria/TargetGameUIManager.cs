@@ -74,6 +74,6 @@ public class TargetGameUIManager : MonoBehaviour
     private void GoToMenu()
     {
         Time.timeScale = 1;
-        Debug.Log("Escena Menu");
+        SceneManager.LoadScene("Workshop");
     }
 }
