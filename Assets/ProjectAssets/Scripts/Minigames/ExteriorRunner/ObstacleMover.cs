@@ -3,13 +3,19 @@ using UnityEngine;
 public class ObstacleMover : MonoBehaviour
 {
     public float speed = 5f;
-    public float destroyX = -30f;
+    public bool moveRight = false;
+    public float destroyXPosition = -15f;
 
     void Update()
     {
-        transform.Translate(Vector3.left * speed * Time.deltaTime);
+        if (RunnerManager.Instance.isGameOver) return;
 
-        if (transform.position.x < destroyX)
+   
+        float direction = moveRight ? 1f : -1f;
+        transform.Translate(Vector3.right * direction * speed * Time.deltaTime);
+
+    
+        if ((!moveRight && transform.position.x < destroyXPosition) || (moveRight && transform.position.x > destroyXPosition))
         {
             Destroy(gameObject);
         }

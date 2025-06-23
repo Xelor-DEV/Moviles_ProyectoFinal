@@ -26,7 +26,7 @@ public class RunnerManager : MonoBehaviour
     private float survivalTime = 0f;
     private float coinTimer = 0f;
 
-    private bool isGameOver = false;
+    public bool isGameOver = false;
     void Awake()
     {
         if (Instance == null)
@@ -52,7 +52,7 @@ public class RunnerManager : MonoBehaviour
         if (isGameOver) return;
 
         survivalTime += Time.deltaTime;
-        timeText.text = $"Tiempo: {Mathf.FloorToInt(survivalTime)}s";
+        timeText.text = $"Time: {Mathf.FloorToInt(survivalTime)}s";
 
         coinTimer += Time.deltaTime;
         if (coinTimer >= 5f)
@@ -61,8 +61,8 @@ public class RunnerManager : MonoBehaviour
             coinTimer = 0f;
         }
 
-        pickupText.text = $"Chatarra: {counterData.pickupsCollected}";
-        coinText.text = $"Monedas: {coinData.coins}";
+        pickupText.text = $"Scrap: {counterData.pickupsCollected}";
+        coinText.text = $"Coins: {coinData.coins}";
     }
 
     public void ShowGameOverPanel()
@@ -70,9 +70,9 @@ public class RunnerManager : MonoBehaviour
         isGameOver = true;
         Time.timeScale = 0f;
 
-        finalCoinsText.text = $"Monedas conseguidas: {coinData.coins}";
-        finalPickupsText.text = $"Chatarra: {counterData.pickupsCollected}";
-        finalTimeText.text = $"Tiempo sobrevivido: {Mathf.FloorToInt(survivalTime)}s";
+        finalCoinsText.text = $"Coins collected: {coinData.coins}";
+        finalPickupsText.text = $"Scrap collected: {counterData.pickupsCollected}";
+        finalTimeText.text = $"Time survived: {Mathf.FloorToInt(survivalTime)}s";
 
         gameOverPanel.SetActive(true);
     }

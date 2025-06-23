@@ -25,6 +25,7 @@ public class GameUIManager : MonoBehaviour
     public CoinData coinData;
 
     private int correctSwipes = 0;
+    private int correctSwipesSpeed = 0;
     private float timeSurvived = 0f;
 
     public static GameUIManager Instance;
@@ -51,6 +52,14 @@ public class GameUIManager : MonoBehaviour
         currentTime -= Time.deltaTime * timeDecreaseSpeed;
         timeSurvived += Time.deltaTime;
 
+        if(correctSwipesSpeed > 20)
+        {
+            timeDecreaseSpeed = 3.5f;
+        }
+        else if (correctSwipesSpeed > 50)
+        {
+            timeDecreaseSpeed = 5;
+        }
         if (currentTime <= 0)
         {
             currentTime = 0;
@@ -64,7 +73,7 @@ public class GameUIManager : MonoBehaviour
     {
         timeSlider.value = currentTime / totalTime;
         timeText.text = Mathf.CeilToInt(currentTime).ToString();
-        coinText.text = "Monedas: " + coinData.coins.ToString();
+        coinText.text = "Coins: " + coinData.coins.ToString();
     }
 
 
@@ -76,7 +85,7 @@ public class GameUIManager : MonoBehaviour
             currentTime += 1;
         }
         correctSwipes++;
-
+        correctSwipesSpeed++;
         if (correctSwipes >= 3)
         {
             int reward = timeSurvived >= 20f ? 5 : 3;
@@ -108,10 +117,10 @@ public class GameUIManager : MonoBehaviour
     void EndGame()
     {
         
-        Debug.Log("Tiempo terminado. Juego finalizado.");
+       
 
-        finalCoinsText.text = $"Monedas conseguidas: {coinData.coins}";
-        finalTimeText.text = $"Tiempo sobrevivido: {Mathf.FloorToInt(timeSurvived)}s";
+        finalCoinsText.text = $"Coins collected: {coinData.coins}";
+        finalTimeText.text = $"Time survived: {Mathf.FloorToInt(timeSurvived)}s";
         gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
     }

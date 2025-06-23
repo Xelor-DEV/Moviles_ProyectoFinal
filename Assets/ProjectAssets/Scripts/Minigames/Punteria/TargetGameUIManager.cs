@@ -54,14 +54,14 @@ public class TargetGameUIManager : MonoBehaviour
 
     void UpdateUI()
     {
-        coinText.text = $"Monedas: {coinData.coins}";
-        hitsText.text = $"Aciertos: {hitCount}";
+        coinText.text = $"Coins: {coinData.coins}";
+        hitsText.text = $"Successes: {hitCount}";
     }
     public void ShowGameOverPanel()
     {
         
-        finalCoinsText.text = $"Monedas conseguidas: {coinData.coins}";
-        finalHitsText.text = $"Aciertos logrados: {hitCount}";
+        finalCoinsText.text = $"Coins collected: {coinData.coins}";
+        finalHitsText.text = $"Successes achieved: {hitCount}";
         gameOverPanel.SetActive (true);
         Time.timeScale = 0f;
     }

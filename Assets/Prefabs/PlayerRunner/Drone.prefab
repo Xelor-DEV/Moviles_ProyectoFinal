@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8707972913124315540}
   - component: {fileID: 1595954261524932006}
-  - component: {fileID: 5505762546339004149}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Obstacle
@@ -53,22 +52,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5363024
-  m_Center: {x: 0.19988412, y: 0.12358171, z: 0}
---- !u!114 &5505762546339004149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4403503395789573813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afc2c0b31537cd94ba16c9425dce0364, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  destroyX: -30
+  m_Radius: 0.3605476
+  m_Center: {x: 0.12007719, y: 0.08266491, z: 0.16796988}
 --- !u!1001 &3723132460389835590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78,16 +63,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 8707972913124315540}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5021697
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5021697
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5021697
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.463
+      value: -1.3208
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.31
+      value: -0.12817
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.1
+      value: 0.13244
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -166,7 +163,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 65e142504e1decb47aeb4e7a97cb1b83, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -8873552409887875902, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
+    - {fileID: 6494565399777438368, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
+    - {fileID: -2982275742382586474, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
+    - {fileID: -4001175178218152814, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
+    - {fileID: 4664163539716839191, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
+    - {fileID: 760710363213937977, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 805c04c12b36ed7488a682f5da99eec1, type: 3}
