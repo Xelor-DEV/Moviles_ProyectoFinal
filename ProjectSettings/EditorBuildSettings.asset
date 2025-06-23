@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/ProjectAssets/Scenes/Workshop.unity
+    path: Assets/ProjectAssets/Scenes/LoadScenes.unity
+    guid: 2863517c00601304cb1ca833620047fc
+  - enabled: 1
+    path: Assets/ProjectAssets/Scenes/ExitGate.unity
     guid: 185c8c3b2e4682b4184056f88597e564
+  - enabled: 1
+    path: Assets/ProjectAssets/Scenes/Workshop.unity
+    guid: 55f2298895f4aeb47bdbc742d0c3e830
+  - enabled: 1
+    path: Assets/ProjectAssets/Scenes/PowerStation.unity
+    guid: c1197528c357bf342a3ecb8b4f3b0540
   - enabled: 1
     path: Assets/ProjectAssets/Scenes/Minijuegos/ExteriorRunner.unity
     guid: 92977b12bb2e0a94381a2ffb9a242f10

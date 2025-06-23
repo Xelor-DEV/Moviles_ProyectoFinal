@@ -20,6 +20,10 @@ public class RobotNeeds : ScriptableObject
     public float armorRepairPerScrap = 0.05f;
     public float minArmorForDamage = 0.2f;
 
+    [Header("Power Station Settings")]
+    public float rechargePowerPerCore = 0.25f;
+    public float rechargeTimePerCore = 5f;
+
     public float Armor
     {
         get

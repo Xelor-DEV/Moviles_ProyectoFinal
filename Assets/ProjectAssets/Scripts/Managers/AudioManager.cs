@@ -52,9 +52,8 @@ public class AudioManager : NonPersistentSingleton<AudioManager>
         }
     }
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         InitializeSfxSources();
     }
 

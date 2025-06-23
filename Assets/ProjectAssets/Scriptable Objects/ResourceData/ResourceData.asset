@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ResourceData
   m_EditorClassIdentifier: 
   scrap: 10
-  prismites: 5
-  energyCores: 5
+  prismites: 100
+  energyCores: 10

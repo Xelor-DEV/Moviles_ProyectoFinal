@@ -11,6 +11,11 @@ public class UI_AudioSliders : MonoBehaviour
     [Header("References")]
     [SerializeField] private AudioConfig audioConfig;
 
+    void Start()
+    {
+        LoadAudioSettings();
+    }
+
     public void LoadAudioSettings()
     {
         if (audioConfig == null) return;
