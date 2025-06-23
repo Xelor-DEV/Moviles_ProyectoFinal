@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "403065780939",
+    "firebase_url": "https://lasthopebot-default-rtdb.firebaseio.com",
+    "project_id": "lasthopebot",
+    "storage_bucket": "lasthopebot.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403065780939:android:9f135ef776f9f797f2794e",
+        "android_client_info": {
+          "package_name": "com.XelorDEV.LastHopeBot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK5EeQRj67m412q4JVzKa1ksxDEktcgnc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

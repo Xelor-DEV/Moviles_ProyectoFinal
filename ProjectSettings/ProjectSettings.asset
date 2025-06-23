@@ -165,7 +165,7 @@ PlayerSettings:
   androidMinAspectRatio: 1
   applicationIdentifier:
     Android: com.XelorDEV.LastHopeBot
-    Standalone: com.Unity-Technologies.com.unity.template.urp-blank
+    Standalone: com.Xelor-DEV.Last-Hope-Bot
     iPhone: com.Unity-Technologies.com.unity.template.urp-blank
   buildNumber:
     Standalone: 0
