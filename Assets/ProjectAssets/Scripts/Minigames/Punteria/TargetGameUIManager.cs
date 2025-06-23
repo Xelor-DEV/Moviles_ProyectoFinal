@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-public class TargetGameUIManager : MonoBehaviour
+
+public class TargetGameUIManager : NonPersistentSingleton<TargetGameUIManager>
 {
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI coinText;
@@ -15,30 +16,17 @@ public class TargetGameUIManager : MonoBehaviour
     [SerializeField] private Button retryButton;
     [SerializeField] private Button menuButton;
 
+    [SerializeField] private string gameScene;
 
-    [Header("Datos")]
-    public CoinData coinData;
-
-    private int hitCount = 0;
-
-    public static TargetGameUIManager Instance;
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }  
-    }
+    [SerializeField] private ResourceManager resourceManager;
+    private int currentPrismites;
+    private int hitCount;
 
     private void Start()
     {
-        coinData.ResetCoins();
+        currentPrismites = 0;
         hitCount = 0;
+
         UpdateUI();
         gameOverPanel.SetActive(false);
         retryButton.onClick.AddListener(RestartGame);
@@ -48,32 +36,38 @@ public class TargetGameUIManager : MonoBehaviour
     public void AddHit()
     {
         hitCount++;
-        coinData.AddCoins(3); 
+        currentPrismites += 3;
         UpdateUI();
     }
 
     void UpdateUI()
     {
-        coinText.text = $"Coins: {coinData.coins}";
+        coinText.text = $"Prismites: {currentPrismites}";
         hitsText.text = $"Successes: {hitCount}";
     }
+
     public void ShowGameOverPanel()
     {
-        
-        finalCoinsText.text = $"Coins collected: {coinData.coins}";
+        if (resourceManager != null)
+        {
+            resourceManager.AddPrismites(currentPrismites);
+        }
+
+        finalCoinsText.text = $"Prismites collected: {currentPrismites}";
         finalHitsText.text = $"Successes achieved: {hitCount}";
-        gameOverPanel.SetActive (true);
+        gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
     }
+
     private void RestartGame()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
     }
+
     private void GoToMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("Workshop");
+        StartCoroutine(GlobalSceneManager.Instance.LoadSceneAsync(gameScene));
     }
 }

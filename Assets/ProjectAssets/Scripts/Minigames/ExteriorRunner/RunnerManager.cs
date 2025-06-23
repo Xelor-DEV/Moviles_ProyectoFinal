@@ -2,11 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-public class RunnerManager : MonoBehaviour
+
+public class RunnerManager : NonPersistentSingleton<RunnerManager>
 {
     [Header("Referencias")]
     public ScrashCounter counterData;
-    public CoinData coinData;
 
     [Header("UI")]
     public TextMeshProUGUI pickupText;
@@ -20,27 +20,18 @@ public class RunnerManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI finalTimeText;
     [SerializeField] private Button retryButton;
     [SerializeField] private Button menuButton;
-
-    public static RunnerManager Instance;
+    [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private string gameScene;
 
     private float survivalTime = 0f;
     private float coinTimer = 0f;
-
+    private int currentPrismites = 0;
     public bool isGameOver = false;
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+
     void Start()
     {
-        coinData.ResetCoins();
+        currentPrismites = 0;
+        counterData.ResetCounter();
         gameOverPanel.SetActive(false);
 
         retryButton.onClick.AddListener(RestartGame);
@@ -57,12 +48,12 @@ public class RunnerManager : MonoBehaviour
         coinTimer += Time.deltaTime;
         if (coinTimer >= 5f)
         {
-            coinData.AddCoins(3);
+            currentPrismites += 3;
             coinTimer = 0f;
         }
 
         pickupText.text = $"Scrap: {counterData.pickupsCollected}";
-        coinText.text = $"Coins: {coinData.coins}";
+        coinText.text = $"Prismites: {currentPrismites}";
     }
 
     public void ShowGameOverPanel()
@@ -70,7 +61,13 @@ public class RunnerManager : MonoBehaviour
         isGameOver = true;
         Time.timeScale = 0f;
 
-        finalCoinsText.text = $"Coins collected: {coinData.coins}";
+        if (resourceManager != null)
+        {
+            resourceManager.AddPrismites(currentPrismites);
+            resourceManager.AddScrap(counterData.pickupsCollected);
+        }
+
+        finalCoinsText.text = $"Prismites collected: {currentPrismites}";
         finalPickupsText.text = $"Scrap collected: {counterData.pickupsCollected}";
         finalTimeText.text = $"Time survived: {Mathf.FloorToInt(survivalTime)}s";
 
@@ -85,7 +82,7 @@ public class RunnerManager : MonoBehaviour
 
     private void GoToMenu()
     {
-
-        SceneManager.LoadScene("Workshop");
+        Time.timeScale = 1f;
+        StartCoroutine(GlobalSceneManager.Instance.LoadSceneAsync(gameScene));
     }
 }

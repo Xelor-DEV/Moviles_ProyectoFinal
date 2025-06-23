@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26095664ede5a384ab3f270299f1b496, type: 3}
   m_Name: ResourceData
   m_EditorClassIdentifier: 
-  scrap: 10
-  prismites: 100
+  scrap: 22
+  prismites: 52
   energyCores: 10

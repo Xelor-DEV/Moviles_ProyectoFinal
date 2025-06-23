@@ -13,7 +13,14 @@ public class RobotSkinDatabase : ScriptableObject
     {
         get
         {
-            return currentSkin != null ? currentSkin.SkinId : defaultSkin.SkinId;
+            if(currentSkin != null)
+            {
+                return currentSkin.SkinId;
+            }
+            else
+            {
+                return defaultSkin.SkinId;
+            }
         }
     }
 

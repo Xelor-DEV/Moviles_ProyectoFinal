@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 public class GlobalSceneManager : NonPersistentSingleton<GlobalSceneManager>
 {
-    private List<AsyncOperation> activeOperations = new List<AsyncOperation>();
-
-    public IEnumerator LoadSceneAsync(string sceneName, bool isAdditive = false)
+    public void InitializeLoadSceneAsync(string sceneName)
     {
-        LoadSceneMode mode = isAdditive ? LoadSceneMode.Additive : LoadSceneMode.Single;
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, mode);
+        StartCoroutine(LoadSceneAsync(sceneName));
+    }
+    public IEnumerator LoadSceneAsync(string sceneName)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         asyncLoad.allowSceneActivation = false;
-        activeOperations.Add(asyncLoad);
 
         while (!asyncLoad.isDone)
         {
@@ -22,59 +22,68 @@ public class GlobalSceneManager : NonPersistentSingleton<GlobalSceneManager>
             }
             yield return null;
         }
-
-        activeOperations.Remove(asyncLoad);
     }
 
-    public IEnumerator LoadMultipleAdditiveScenesAsync(string[] sceneNames)
+    public AsyncOperation LoadSceneAsyncWithoutActivation(string sceneName, bool isAdditive)
     {
-        List<AsyncOperation> loadOperations = new List<AsyncOperation>();
+        LoadSceneMode mode;
 
-        foreach (string sceneName in sceneNames)
+        if(isAdditive == true)
         {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-            asyncLoad.allowSceneActivation = false;
-            loadOperations.Add(asyncLoad);
-            activeOperations.Add(asyncLoad);
+            mode = LoadSceneMode.Additive;
+        }
+        else
+        {
+            mode = LoadSceneMode.Single;
         }
 
-        bool allScenesReady = false;
+        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(sceneName, mode);
+        asyncOp.allowSceneActivation = false;
+        return asyncOp;
+    }
 
-        while (!allScenesReady)
-        {
-            allScenesReady = true;
-            foreach (AsyncOperation op in loadOperations)
-            {
-                if (op.progress < 0.9f)
-                {
-                    allScenesReady = false;
-                    break;
-                }
-            }
-            yield return null;
-        }
-
-        foreach (AsyncOperation op in loadOperations)
-        {
-            op.allowSceneActivation = true;
-        }
-
-        foreach (AsyncOperation op in loadOperations)
+    public IEnumerator WaitForAllOperations(List<AsyncOperation> operations)
+    {
+        foreach (AsyncOperation op in operations)
         {
             while (!op.isDone)
             {
                 yield return null;
             }
-            activeOperations.Remove(op);
+        }
+    }
+
+    public IEnumerator WaitUntilAllOperationsReady(AsyncOperation mainOp, List<AsyncOperation> additiveOps)
+    {
+        bool allReady = false;
+        while (allReady == false)
+        {
+            allReady = true;
+
+            if (mainOp.progress < 0.9f)
+            {
+                allReady = false;
+            }
+
+            for (int i = 0; i < additiveOps.Count; ++i)
+            {
+                AsyncOperation op = additiveOps[i];
+                if (op.progress < 0.9f)
+                {
+                    allReady = false;
+                    break;
+                }
+            }
+            yield return null;
         }
     }
 
     public void SetActiveScene(string sceneName)
     {
         Scene scene = SceneManager.GetSceneByName(sceneName);
-        if (scene.IsValid() && scene.isLoaded)
+        if (scene.IsValid() == true && scene.isLoaded == true)
         {
             SceneManager.SetActiveScene(scene);
-        }
+        } 
     }
 }
