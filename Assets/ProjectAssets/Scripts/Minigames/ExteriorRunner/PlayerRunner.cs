@@ -1,78 +1,139 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerRunner : MonoBehaviour
 {
-       [Header("Configuración")]
- public float jumpForce = 8f;
-    public float fallMultiplier = 2.5f;
-    public float lowJumpMultiplier = 2f;
-    public bool isGrounded = true;
+    public enum Lane { Left, Middle, Right }
+    private Lane currentLane = Lane.Middle;
 
-    [Header("Referencias")]
-    [SerializeField] private ExternalRunner gameManager; 
-    private Rigidbody _comprigidbody;
+    [Header("Movement Settings")]
+    public float laneDistance = 2f;
+    public float swipeThreshold = 50f;
+    public float moveSpeed = 5f;
 
-    private Vector3 tamañoNormal = new Vector3(1, 1, 1);
-    private Vector3 tamañoTransformado = new Vector3(1, 0.6828f, 1);
-    private bool shrinkPressed = false;
-    void Awake()
+    private Vector2 fingerDownPosition;
+    private Vector2 fingerUpPosition;
+    private bool isSwiping = false;
+
+    private Vector3 targetPosition;
+    private bool isMoving = false;
+
+    void Start()
     {
-        _comprigidbody = GetComponent<Rigidbody>();
+        targetPosition = transform.position;
     }
 
-    private void Update()
+    void Update()
     {
-        if (isGrounded)
+        HandleTouchInput();
+
+        if (isMoving)
         {
-            if (shrinkPressed && transform.localScale != tamañoTransformado)
+            MoveToTargetPosition();
+        }
+    }
+
+    private void HandleTouchInput()
+    {
+        foreach (Touch touch in Input.touches)
+        {
+            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) return;
+
+            switch (touch.phase)
             {
-                float deltaY = (tamañoNormal.y - tamañoTransformado.y) * 0.5f;
-                transform.localScale = tamañoTransformado;
-                transform.position -= new Vector3(0, deltaY, 0);
+                case TouchPhase.Began:
+                    fingerDownPosition = touch.position;
+                    fingerUpPosition = touch.position;
+                    isSwiping = false;
+                    break;
+
+                case TouchPhase.Moved:
+                    fingerUpPosition = touch.position;
+                    if (!isMoving)
+                    {
+                        CheckSwipe();
+                    }
+                    break;
+
+                case TouchPhase.Ended:
+                    isSwiping = false; 
+                    break;
             }
-            else if (!shrinkPressed && transform.localScale != tamañoNormal)
+        }
+    }
+
+    private void MoveToTargetPosition()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
+        {
+            isMoving = false;
+        }
+    }
+
+    private void CheckSwipe()
+    {
+        if (isSwiping || isMoving) return;
+
+        float deltaX = fingerUpPosition.x - fingerDownPosition.x;
+
+        if (Mathf.Abs(deltaX) > swipeThreshold)
+        {
+            isSwiping = true;
+
+            if (deltaX > 0)
             {
-                float deltaY = (tamañoNormal.y - tamañoTransformado.y) * 0.5f;
-                transform.localScale = tamañoNormal;
-                transform.position += new Vector3(0, deltaY, 0);
+                MoveRight();
+            }
+            else
+            {
+                MoveLeft();
             }
         }
-
-        if (_comprigidbody.linearVelocity.y < 0)
-        {
-            _comprigidbody.linearVelocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-        }
-        else if (_comprigidbody.linearVelocity.y > 0) 
-        {
-            _comprigidbody.linearVelocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
-        }
     }
 
-    public void Jump()
+    private void MoveLeft()
     {
-        if (isGrounded)
+        switch (currentLane)
         {
-            _comprigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
+            case Lane.Right:
+                currentLane = Lane.Middle;
+                targetPosition = new Vector3(transform.position.x, transform.position.y, 0);
+                break;
+            case Lane.Middle:
+                currentLane = Lane.Left;
+                targetPosition = new Vector3(transform.position.x, transform.position.y, -laneDistance);
+                break;
         }
+        isMoving = true;
     }
-    public void SetShrink(bool shrink)
+
+    private void MoveRight()
     {
-        shrinkPressed = shrink;
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == ("Ground"))
+        switch (currentLane)
         {
-            isGrounded=true;
+            case Lane.Left:
+                currentLane = Lane.Middle;
+                targetPosition = new Vector3(transform.position.x, transform.position.y, 0);
+                break;
+            case Lane.Middle:
+                currentLane = Lane.Right;
+                targetPosition = new Vector3(transform.position.x, transform.position.y, laneDistance);
+                break;
         }
+        isMoving = true;
     }
-    void OnTriggerEnter(Collider other)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == ("Obstacle") && gameManager != null)
+        if (other.CompareTag("Obstacle"))
         {
             RunnerManager.Instance.ShowGameOverPanel();
-            Time.timeScale = 0f;
+        }
+        else if (other.CompareTag("Pickup"))
+        {
+            RunnerManager.Instance.counterData.AddPickup();
+            other.gameObject.SetActive(false);
         }
     }
 }

@@ -1,121 +1,86 @@
 using UnityEngine;
 using System.Collections.Generic;
+
 public class ExternalRunner : MonoBehaviour
 {
-    public int maxGroundSegments = 3;
-    public GameObject groundPrefab; 
-    public float groundLength = 20f;
-    public float groundSpeed = 5f;
-    public float groundHeight = 0f;
-    public GameObject obstaclePrefab1;
-    public GameObject obstaclePrefab2;
+    [Header("Obstacle Settings")]
+    public GameObject[] obstaclePrefabs; 
+    public GameObject pickupPrefab;    
 
-    private Queue<GameObject> groundPool = new Queue<GameObject>();
-    private float timer = 0f;
-    public float speedIncreaseInterval = 5f;
+    [Header("Spawn Settings")]
+    public Transform[] lanes;           
+    public float spawnRate = 1f;       
+    public float objectSpeed = 5f;     
+    public float spawnXPosition = 15f; 
+    public float destroyXPosition = -15f; 
+    [Range(0f, 1f)] public float pickupProbability = 0.3f; 
 
-    void Awake()
-    {
 
-        for (int i = 0; i < maxGroundSegments; i++)
-        {
-            CreateGroundSegment(i * groundLength);
+    private float speedIncreaseTimer = 0f;
+    public float speedIncreaseInterval = 10f; 
+    public float speedIncrement = 0.2f;
 
-        }
-    }
+    private float nextSpawnTime;
+    private System.Random random = new System.Random();
 
     void Update()
     {
-        MoveGround();
-        RecycleGround();
-        timer += Time.deltaTime;
-        if(timer >= speedIncreaseInterval)
+        if (Time.time >= nextSpawnTime && !RunnerManager.Instance.isGameOver)
         {
-            groundSpeed += 1f;
-            timer = 0f;
+            SpawnObjects();
+            nextSpawnTime = Time.time + 1f / spawnRate;
         }
-    }
-
-    void MoveGround()
-    {
-        foreach (GameObject ground in groundPool)
+        speedIncreaseTimer += Time.deltaTime;
+        if (speedIncreaseTimer >= speedIncreaseInterval)
         {
-            ground.transform.Translate(Vector3.left * groundSpeed * Time.deltaTime);
-        }
-       
-    }
-
-    void RecycleGround()
-    {
-        GameObject firstGround = groundPool.Peek();
-
-        if (firstGround.transform.position.x < -groundLength)
-        {
-            GameObject recycledGround = groundPool.Dequeue();
-            GameObject lastGround = GetLastGround();
-
-            float newX = lastGround.transform.position.x + groundLength;
-            recycledGround.transform.position = new Vector3(newX, groundHeight, 0);
-            groundPool.Enqueue(recycledGround);
-
-            SpawnObstacles(newX);
-        }
-    }
-    void CreateGroundSegment(float xPosition)
-    {
-        GameObject ground = Instantiate(groundPrefab, new Vector3(xPosition, groundHeight, 0), Quaternion.identity);
-        groundPool.Enqueue(ground);
-        SpawnObstacles(xPosition);
-    }
-
-    void SpawnObstacles(float baseX)
-    {
-        float groundX = baseX + groundLength / 2f;
-        Vector3 spawnPosition;
-
-
-
-        int obstacleType = Random.Range(1, 5);
-
-        if (obstacleType == 1)
-        {
+            objectSpeed += speedIncrement;
+            if(spawnRate < 3)
+            {
+                spawnRate = spawnRate + 0.2f;
+            }
            
-            spawnPosition = new Vector3(groundX, 2.27f, 0);
-            GameObject o = Instantiate(obstaclePrefab1, spawnPosition, Quaternion.identity);
-          
-            o.AddComponent<ObstacleMover>().speed = groundSpeed;
+            speedIncreaseTimer = 0f; 
+            Debug.Log($"Velocidad aumentada a: {objectSpeed}"); 
         }
-        else if (obstacleType == 2) 
-        {
-            
-            spawnPosition = new Vector3(groundX + 10f, 5.36f, 0);
-            GameObject o = Instantiate(obstaclePrefab2, spawnPosition, Quaternion.identity);
-         
-            o.AddComponent<ObstacleMover>().speed = groundSpeed;
-        }
-        else if(obstacleType == 3)
-        {
-                spawnPosition = new Vector3(groundX + 10f, 4.36f, 0);
-                GameObject o = Instantiate(obstaclePrefab2, spawnPosition, Quaternion.identity);
-              
-                o.AddComponent<ObstacleMover>().speed = groundSpeed;
-
-
-        }
-        else
-        {
-            spawnPosition = new Vector3(groundX + 10f, 2.86f, 0);
-            GameObject o = Instantiate(obstaclePrefab2, spawnPosition, Quaternion.identity);
-          
-            o.AddComponent<ObstacleMover>().speed = groundSpeed;
-        }
-
-
     }
-    GameObject GetLastGround()
+
+    private void SpawnObjects()
     {
-        GameObject[] grounds = groundPool.ToArray();
-        return grounds[grounds.Length - 1]; 
+   
+        bool spawnPickup = Random.value < pickupProbability;
+
+
+        int randomLaneIndex = random.Next(0, lanes.Length);
+        Transform selectedLane = lanes[randomLaneIndex];
+
+
+        GameObject objectToSpawn = spawnPickup ? pickupPrefab : GetRandomObstacle();
+
+
+        GameObject newObject = Instantiate(
+            objectToSpawn,
+            new Vector3(spawnXPosition, selectedLane.position.y, selectedLane.position.z),
+            objectToSpawn.transform.rotation
+        );
+
+  
+        ObstacleMover mover = newObject.AddComponent<ObstacleMover>();
+        mover.speed = objectSpeed;
+        mover.moveRight = false;
+        mover.destroyXPosition = destroyXPosition;
+
+      
+        newObject.tag = spawnPickup ? "Pickup" : "Obstacle";
+        Collider collider = newObject.GetComponent<Collider>();
+        if (collider != null)
+        {
+            collider.isTrigger = spawnPickup;
+        }
+    }
+
+    private GameObject GetRandomObstacle()
+    {
+        return obstaclePrefabs[random.Next(0, obstaclePrefabs.Length)];
     }
 
 }
