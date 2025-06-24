@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
+using System.Collections;
 
 public class ShopManager : MonoBehaviour
 {
@@ -34,10 +35,15 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private SkinManager skinManager;
     [SerializeField] private UI_Resources uiResources;
 
-    private void Start()
+    private void OnEnable()
     {
-        InitializeConversionItems();
-        InitializeSkinItems();
+        DatabaseManager.Instance.OnLoadData += InitializeConversionItems;
+        DatabaseManager.Instance.OnLoadData += InitializeSkinItems;
+    }
+    private void OnDisable()
+    {
+        DatabaseManager.Instance.OnLoadData -= InitializeConversionItems;
+        DatabaseManager.Instance.OnLoadData -= InitializeSkinItems;
     }
 
     private void InitializeConversionItems()
@@ -55,6 +61,10 @@ public class ShopManager : MonoBehaviour
         {
             skinItems[i].costText.text = "x" + skinItems[i].prismitesCost;
             skinItems[i].skinNameText.text = skinItems[i].skinData.SkinName;
+            if (skinItems[i].skinData.IsUnlocked == true)
+            {
+                skinItems[i].costText.text = "";
+            }
         }
     }
 

@@ -11,11 +11,17 @@ public class UI_Resources : MonoBehaviour
     [SerializeField] private TMP_Text prismitesText;
     [SerializeField] private TMP_Text energyCoresText;
 
-    private void Start()
+    private void OnEnable()
     {
-        InitializeUI();
+        DatabaseManager.Instance.OnLoadData += InitializeUI;
     }
-    private void InitializeUI()
+
+    private void OnDisable()
+    {
+        DatabaseManager.Instance.OnLoadData -= InitializeUI;
+    }
+
+    public void InitializeUI()
     {
         if (resourceData == null)
         {

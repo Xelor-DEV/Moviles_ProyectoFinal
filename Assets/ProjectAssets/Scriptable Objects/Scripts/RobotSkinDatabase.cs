@@ -95,4 +95,17 @@ public class RobotSkinDatabase : ScriptableObject
             currentSkin = value;
         }
     }
+
+    public RobotSkinData FindSkinByID(string skinID)
+    {
+        for (int i = 0; i < allSkins.Length; ++i)
+        {
+            if (allSkins[i].SkinId == skinID)
+            {
+                return allSkins[i];
+            }
+        }
+
+        return defaultSkin;
+    }
 }

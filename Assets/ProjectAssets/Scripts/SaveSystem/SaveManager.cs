@@ -15,11 +15,6 @@ public class SaveManager : MonoBehaviour
         LoadGameData();
     }
 
-    private void OnApplicationQuit()
-    {
-        SaveGame();
-    }
-
     private void OnApplicationPause(bool pauseStatus)
     {
         if (pauseStatus)

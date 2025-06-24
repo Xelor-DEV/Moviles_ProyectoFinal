@@ -6,6 +6,7 @@ public class UserDataSO : ScriptableObject
     [Header("Data")]
     [SerializeField] private string userId = "";
     [SerializeField] private string email = "";
+    [SerializeField] private bool firstSession = true;
 
     public string UserId
     {
@@ -43,6 +44,18 @@ public class UserDataSO : ScriptableObject
             {
                 return false;
             }
+        }
+    }
+
+    public bool FirstSession
+    {
+        get
+        {
+            return firstSession;
+        }
+        set
+        {
+            firstSession = value;
         }
     }
 

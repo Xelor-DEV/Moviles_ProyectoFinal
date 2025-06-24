@@ -6,7 +6,7 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private RobotSkinDatabase robotSkins;
     [SerializeField] private Material robotMaterial;
 
-    void Awake()
+    void Start()
     {
         ApplySkin(robotSkins.CurrentSkin);
     }
