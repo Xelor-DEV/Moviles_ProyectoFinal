@@ -13,12 +13,12 @@ public class UI_Resources : MonoBehaviour
 
     private void OnEnable()
     {
-        DatabaseManager.Instance.OnLoadData += InitializeUI;
+        DatabaseManager.OnLoadData += InitializeUI;
     }
 
     private void OnDisable()
     {
-        DatabaseManager.Instance.OnLoadData -= InitializeUI;
+        DatabaseManager.OnLoadData -= InitializeUI;
     }
 
     public void InitializeUI()

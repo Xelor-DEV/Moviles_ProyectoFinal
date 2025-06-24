@@ -22,7 +22,7 @@ public class DatabaseManager : SingletonPersistent<DatabaseManager>
     [SerializeField] private ResourceData resourceData;
     [SerializeField] private RobotSkinDatabase skinDatabase;
 
-    public Action OnLoadData;
+    public static Action OnLoadData;
 
     private DatabaseReference dbReference;
     private bool dataLoaded = false;

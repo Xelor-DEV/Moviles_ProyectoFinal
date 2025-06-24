@@ -19,7 +19,7 @@ public static class SaveSystem
         data.masterVolume = audioConfig.MasterVolume;
         data.musicVolume = audioConfig.MusicVolume;
         data.sfxVolume = audioConfig.SfxVolume;
-        data.saveDateTime = DateTime.UtcNow.ToString("o");
+        data.saveDateTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
 
         formatter.Serialize(stream, data);
         stream.Close();

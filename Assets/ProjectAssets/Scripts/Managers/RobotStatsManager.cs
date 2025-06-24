@@ -8,9 +8,9 @@ public class RobotStats : MonoBehaviour
     [SerializeField] private UI_NeedsBars needsBars;
     [SerializeField] private ResourceManager resourceManager;
 
-    private const int ArmorBarIndex = 0;
-    private const int PowerBarIndex = 1;
-    private const int FunBarIndex = 2;
+    private int ArmorBarIndex = 0;
+    private int PowerBarIndex = 1;
+    private int FunBarIndex = 2;
 
     public RobotNeeds NeedsConfig
     {

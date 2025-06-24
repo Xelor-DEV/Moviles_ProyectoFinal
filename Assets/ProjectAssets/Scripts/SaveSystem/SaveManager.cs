@@ -38,7 +38,12 @@ public class SaveManager : MonoBehaviour
             audioConfig.MusicVolume = data.musicVolume;
             audioConfig.SfxVolume = data.sfxVolume;
 
-            if (DateTime.TryParse(data.saveDateTime, out DateTime saveTime))
+            if (DateTime.TryParseExact(
+                data.saveDateTime,
+                "o",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.RoundtripKind,
+                out DateTime saveTime))
             {
                 ApplyNeedsDecay(data, saveTime);
             }
@@ -54,9 +59,15 @@ public class SaveManager : MonoBehaviour
         TimeSpan timePassed = DateTime.UtcNow - saveTime;
         float totalSeconds = (float)timePassed.TotalSeconds;
 
+        if (totalSeconds < 8f)
+        {
+            RestoreNeeds(data);
+            return;
+        }
+
         float intervalsPassed = totalSeconds / robotNeeds.decayInterval;
 
-        float decayAmount = robotNeeds.globalDecayRate * intervalsPassed * decayMultiplier;
+        float decayAmount = robotNeeds.globalDecayRate * intervalsPassed;
 
         robotNeeds.Armor = Mathf.Clamp01(data.armor - decayAmount);
         robotNeeds.Power = Mathf.Clamp01(data.power - decayAmount);

@@ -24,6 +24,10 @@ public class RobotNeeds : ScriptableObject
     public float rechargePowerPerCore = 0.25f;
     public float rechargeTimePerCore = 5f;
 
+    [Header("Notification Threshold")]
+    [SerializeField] private float critical;
+    [SerializeField] private float max;
+
     public float Armor
     {
         get
@@ -32,7 +36,16 @@ public class RobotNeeds : ScriptableObject
         }
         set
         {
-            armor = value;
+            if(armor > max)
+            {
+                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.ArmorHigh);
+            }
+            else if(armor < critical)
+            {
+                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.ArmorLow);
+            }
+
+            armor = value; 
         }
     }
 
@@ -44,6 +57,15 @@ public class RobotNeeds : ScriptableObject
         }
         set
         {
+            if (power > max)
+            {
+                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.PowerHigh);
+            }
+            else if (power < critical)
+            {
+                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.PowerLow);
+            }
+
             power = value;
         }
     }
@@ -56,6 +78,15 @@ public class RobotNeeds : ScriptableObject
         }
         set
         {
+            if (fun > max)
+            {
+                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.FunHigh);
+            }
+            else if (fun < critical)
+            {
+                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.FunLow);
+            }
+
             fun = value;
         }
     }

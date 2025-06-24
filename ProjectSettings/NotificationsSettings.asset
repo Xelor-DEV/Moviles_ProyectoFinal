@@ -1,0 +1,110 @@
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "",
+        "m_EditorClassIdentifier": "",
+        "ToolbarIndex": 0,
+        "m_iOSNotificationSettingsValues": {
+            "m_Keys": [
+                "UnityNotificationRequestAuthorizationOnAppLaunch",
+                "UnityNotificationDefaultAuthorizationOptions",
+                "UnityAddRemoteNotificationCapability",
+                "UnityNotificationRequestAuthorizationForRemoteNotificationsOnAppLaunch",
+                "UnityRemoteNotificationForegroundPresentationOptions",
+                "UnityUseAPSReleaseEnvironment",
+                "UnityUseLocationNotificationTrigger",
+                "UnityAddTimeSensitiveEntitlement"
+            ],
+            "m_Values": [
+                "True",
+                "7",
+                "False",
+                "False",
+                "-1",
+                "False",
+                "False",
+                "False"
+            ]
+        },
+        "m_AndroidNotificationSettingsValues": {
+            "m_Keys": [
+                "UnityNotificationAndroidRescheduleOnDeviceRestart",
+                "UnityNotificationAndroidScheduleExactAlarms",
+                "UnityNotificationAndroidUseCustomActivity",
+                "UnityNotificationAndroidCustomActivityString"
+            ],
+            "m_Values": [
+                "False",
+                "0",
+                "False",
+                "com.unity3d.player.UnityPlayerActivity"
+            ]
+        },
+        "DrawableResources": [
+            {
+                "Id": "funhigh",
+                "Type": 1,
+                "Asset": {
+                    "fileID": 2800000,
+                    "guid": "e4fb1f8f98ca04b4f940facb618ce801",
+                    "type": 3
+                }
+            },
+            {
+                "Id": "funlow",
+                "Type": 1,
+                "Asset": {
+                    "fileID": 2800000,
+                    "guid": "94ae465b0ad767947b91f775a0593472",
+                    "type": 3
+                }
+            },
+            {
+                "Id": "powerhigh",
+                "Type": 1,
+                "Asset": {
+                    "fileID": 2800000,
+                    "guid": "d941291f78cf587429671d93d0052f64",
+                    "type": 3
+                }
+            },
+            {
+                "Id": "powerlow",
+                "Type": 1,
+                "Asset": {
+                    "fileID": 2800000,
+                    "guid": "f68c25331abd88d429bfec3093665f24",
+                    "type": 3
+                }
+            },
+            {
+                "Id": "armorhigh",
+                "Type": 1,
+                "Asset": {
+                    "fileID": 2800000,
+                    "guid": "287ef6a17838cc648816f11d918817d4",
+                    "type": 3
+                }
+            },
+            {
+                "Id": "armorlow",
+                "Type": 1,
+                "Asset": {
+                    "fileID": 2800000,
+                    "guid": "8dea3d436532f7b4f9e2715a9739e1b9",
+                    "type": 3
+                }
+            },
+            {
+                "Id": "smallneeds",
+                "Type": 0,
+                "Asset": {
+                    "fileID": 2800000,
+                    "guid": "e4fb1f8f98ca04b4f940facb618ce801",
+                    "type": 3
+                }
+            }
+        ]
+    }
+}

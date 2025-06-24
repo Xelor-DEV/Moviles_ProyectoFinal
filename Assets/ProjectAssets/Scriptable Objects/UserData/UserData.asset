@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c5df148fdc868941a96c032fbb28007, type: 3}
   m_Name: UserData
   m_EditorClassIdentifier: 
-  userId: bRjpIz8jZ0aBpdO7pndPTEqCCWA2
-  email: bladeuaoficial@gmail.com
-  firstSession: 0
+  userId: 
+  email: 

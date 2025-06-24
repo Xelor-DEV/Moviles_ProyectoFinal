@@ -5,7 +5,7 @@ public class ResourceManager : MonoBehaviour
 {
     [SerializeField] private ResourceData resourceData;
 
-    [Header("Events")]
+    [Header("Int Events")]
     public UnityEvent<int> onScrapChanged;
     public UnityEvent<int> onPrismitesChanged;
     public UnityEvent<int> onEnergyCoresChanged;

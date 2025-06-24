@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38aeb3d79e9df949b4a24263ce61e09, type: 3}
+  m_Name: ArmorLow
+  m_EditorClassIdentifier: 
+  Title: Armor Critical!
+  Text: "Your buddy\u2019s armor is dangerously weak. Protect your friend before
+    they get glitchy!"
+  SmallIcon: smallneeds
+  LargeIcon: armorlow
+  Channel: {fileID: 11400000, guid: 779bcd9e5514c2144aa7d5c6b7f9d09c, type: 2}

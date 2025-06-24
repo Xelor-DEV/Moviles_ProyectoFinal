@@ -3055,6 +3055,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382830211}
   m_CullTransparentMesh: 1
+--- !u!1 &385196678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 385196681}
+  - component: {fileID: 385196680}
+  - component: {fileID: 385196679}
+  m_Layer: 0
+  m_Name: NotificationsSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &385196679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385196678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f03dbe9bc2f6fe49a9bf4ee6187dd37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  funHigh: {fileID: 11400000, guid: 8404eb8328074ee4eb06bd095dcb49f5, type: 2}
+  funLow: {fileID: 11400000, guid: 7880299511a5d0a408f1b322e14df11d, type: 2}
+  armorHigh: {fileID: 11400000, guid: 54b8c67e2a67aa74482d811c905723d8, type: 2}
+  armorLow: {fileID: 11400000, guid: 9b51fbb261e63514f8691adb3ea8518e, type: 2}
+  powerHigh: {fileID: 11400000, guid: e06e4c95f948a244ea7f138ca206494c, type: 2}
+  powerLow: {fileID: 11400000, guid: 3202a6ed30ba6ed4cb0873866680a6c9, type: 2}
+--- !u!114 &385196680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385196678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a60ea55b9a6d3a94b97b5520c61814fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notificationChannels:
+  - {fileID: 11400000, guid: 57b2f38d7b3b50048bfc729efd96fed0, type: 2}
+  - {fileID: 11400000, guid: 779bcd9e5514c2144aa7d5c6b7f9d09c, type: 2}
+  notifications:
+  - {fileID: 11400000, guid: 54b8c67e2a67aa74482d811c905723d8, type: 2}
+  - {fileID: 11400000, guid: 9b51fbb261e63514f8691adb3ea8518e, type: 2}
+  - {fileID: 11400000, guid: 8404eb8328074ee4eb06bd095dcb49f5, type: 2}
+  - {fileID: 11400000, guid: 7880299511a5d0a408f1b322e14df11d, type: 2}
+  - {fileID: 11400000, guid: e06e4c95f948a244ea7f138ca206494c, type: 2}
+  - {fileID: 11400000, guid: 3202a6ed30ba6ed4cb0873866680a6c9, type: 2}
+--- !u!4 &385196681
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385196678}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 487.1713, y: 1927.5127, z: -0.5394479}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &391391729
 GameObject:
   m_ObjectHideFlags: 0
@@ -20399,7 +20472,19 @@ MonoBehaviour:
         m_CallState: 2
   onEnergyCoresChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 57455758}
+        m_TargetAssemblyTypeName: UI_Resources, Assembly-CSharp
+        m_MethodName: UpdateEnergyCoresText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &2096675515
 Transform:
   m_ObjectHideFlags: 0
@@ -25118,6 +25203,7 @@ SceneRoots:
   - {fileID: 1089262940}
   - {fileID: 1934119758}
   - {fileID: 1132869303}
+  - {fileID: 385196681}
   - {fileID: 878763885}
   - {fileID: 1280891340}
   - {fileID: 627804974}

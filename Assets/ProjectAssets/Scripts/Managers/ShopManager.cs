@@ -37,13 +37,13 @@ public class ShopManager : MonoBehaviour
 
     private void OnEnable()
     {
-        DatabaseManager.Instance.OnLoadData += InitializeConversionItems;
-        DatabaseManager.Instance.OnLoadData += InitializeSkinItems;
+        DatabaseManager.OnLoadData += InitializeConversionItems;
+        DatabaseManager.OnLoadData += InitializeSkinItems;
     }
     private void OnDisable()
     {
-        DatabaseManager.Instance.OnLoadData -= InitializeConversionItems;
-        DatabaseManager.Instance.OnLoadData -= InitializeSkinItems;
+        DatabaseManager.OnLoadData -= InitializeConversionItems;
+        DatabaseManager.OnLoadData -= InitializeSkinItems;
     }
 
     private void InitializeConversionItems()
