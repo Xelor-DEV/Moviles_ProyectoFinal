@@ -45,6 +45,10 @@ public class RobotStats : MonoBehaviour
         needsBars.SetBarValueAnimated(PowerBarIndex, needsConfig.Power);
         needsBars.SetBarValueAnimated(FunBarIndex, needsConfig.Fun);
 
+        needsConfig.SendNotificationPower();
+        needsConfig.SendNotificationFun();
+        needsConfig.SendNotificationArmor();
+
         StartCoroutine(DecayNeeds());
     }
 
@@ -61,6 +65,8 @@ public class RobotStats : MonoBehaviour
         {
             needsBars.SetBarValueAnimated(ArmorBarIndex, needsConfig.Armor);
         }
+
+        needsConfig.SendNotificationArmor();
     }
 
     public bool CanRepair(int scrapAmount)

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aed06ebe2b1c97647a1292b44f5d490a, type: 3}
   m_Name: RobotNeeds
   m_EditorClassIdentifier: 
-  armor: 1
-  power: 1
-  fun: 1
+  armor: 0.485
+  power: 0.485
+  fun: 0.485
   globalDecayRate: 0.005
   decayInterval: 10
   armorRepairPerScrap: 0.02

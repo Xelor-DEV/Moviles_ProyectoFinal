@@ -11402,7 +11402,6 @@ MonoBehaviour:
   robotNeeds: {fileID: 11400000, guid: 1cbe07052f2823142b4f7bb2f153dc6e, type: 2}
   audioConfig: {fileID: 11400000, guid: 5d96565883991e341b0b37d12d23ff5c, type: 2}
   returnMessage: {fileID: 1956278057}
-  decayMultiplier: 0.5
 --- !u!4 &1132869303
 Transform:
   m_ObjectHideFlags: 0

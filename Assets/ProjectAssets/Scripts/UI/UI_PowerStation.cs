@@ -102,6 +102,7 @@ public class UI_PowerStation : MonoBehaviour
             {
                 SetDisconnectedState();
             }
+            robotNeeds.SendNotificationPower();
         }
 
         if (!resourceManager.CanAffordEnergyCores(1))

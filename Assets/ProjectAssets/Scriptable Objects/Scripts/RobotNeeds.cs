@@ -36,15 +36,6 @@ public class RobotNeeds : ScriptableObject
         }
         set
         {
-            if(armor > max)
-            {
-                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.ArmorHigh);
-            }
-            else if(armor < critical)
-            {
-                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.ArmorLow);
-            }
-
             armor = value; 
         }
     }
@@ -57,15 +48,6 @@ public class RobotNeeds : ScriptableObject
         }
         set
         {
-            if (power > max)
-            {
-                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.PowerHigh);
-            }
-            else if (power < critical)
-            {
-                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.PowerLow);
-            }
-
             power = value;
         }
     }
@@ -78,16 +60,49 @@ public class RobotNeeds : ScriptableObject
         }
         set
         {
-            if (fun > max)
-            {
-                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.FunHigh);
-            }
-            else if (fun < critical)
-            {
-                NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.FunLow);
-            }
-
             fun = value;
+        }
+    }
+
+    public void SendNotificationArmor()
+    {
+        if (armor > max)
+        {
+            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.ArmorHigh);
+            Debug.Log("1");
+        }
+        else if (armor < critical)
+        {
+            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.ArmorLow);
+            Debug.Log("2");
+        }
+    }
+
+    public void SendNotificationFun()
+    {
+        if (power > max)
+        {
+            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.PowerHigh);
+            Debug.Log("3");
+        }
+        else if (power < critical)
+        {
+            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.PowerLow);
+            Debug.Log("4");
+        }
+    }
+
+    public void SendNotificationPower()
+    {
+        if (fun > max)
+        {
+            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.FunHigh);
+            Debug.Log("5");
+        }
+        else if (fun < critical)
+        {
+            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.FunLow);
+            Debug.Log("6");
         }
     }
 }

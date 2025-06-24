@@ -35,6 +35,11 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private SkinManager skinManager;
     [SerializeField] private UI_Resources uiResources;
 
+    private void Start()
+    {
+        InitializeConversionItems();
+        InitializeSkinItems();
+    }
     private void OnEnable()
     {
         DatabaseManager.OnLoadData += InitializeConversionItems;

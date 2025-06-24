@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 
-#if UNITY_ANDROID
 using Unity.Notifications.Android;
 using UnityEngine.Android;
 
@@ -85,6 +84,8 @@ public class NotificationSystem : NonPersistentSingleton<NotificationSystem>
         };
 
         AndroidNotificationCenter.SendNotification(notification, config.Channel.Id);
+
+        Debug.Log("noti");
     }
 
     public void SendNotification(NotificationConfig config, DateTime fireTime)
@@ -101,5 +102,3 @@ public class NotificationSystem : NonPersistentSingleton<NotificationSystem>
         AndroidNotificationCenter.SendNotification(notification, config.Channel.Id);
     }
 }
-
-#endif

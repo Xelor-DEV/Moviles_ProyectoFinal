@@ -8,8 +8,6 @@ public class SaveManager : MonoBehaviour
     [SerializeField] private AudioConfig audioConfig;
     [SerializeField] private UI_ReturnMessage returnMessage;
 
-    [SerializeField] private float decayMultiplier = 0.5f;
-
     private void Awake()
     {
         LoadGameData();
@@ -78,6 +76,12 @@ public class SaveManager : MonoBehaviour
                           (data.fun - robotNeeds.Fun);
 
         returnMessage.ShowMessage(totalDecay);
+
+        Debug.Log(totalDecay + " " + decayAmount);
+
+        robotNeeds.SendNotificationPower();
+        robotNeeds.SendNotificationFun();
+        robotNeeds.SendNotificationArmor();
     }
 
     private void RestoreNeeds(SaveData data)
