@@ -180,10 +180,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundPrefab: {fileID: 2951539153617971172, guid: bac4a6e764dce0b4b9f24e988e4c2214, type: 3}
-  groundLength: 4.95
+  groundLength: 5
   moveSpeed: 5
-  startPosition: {x: -3.45, y: 0, z: 0}
-  leftBoundary: -15
+  startPosition: {x: -3.4, y: 0, z: 0}
+  leftBoundary: -8.55
 --- !u!4 &134341703
 Transform:
   m_ObjectHideFlags: 0
@@ -543,7 +543,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 268653809}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 024e4aab711b2e146af1b6f41bac4882, type: 3}
   m_Name: 
@@ -1254,7 +1254,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -50}
+  m_AnchoredPosition: {x: 50, y: -78.99999}
   m_SizeDelta: {x: 496.654, y: 106.71619}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &435260416
@@ -1515,10 +1515,10 @@ RectTransform:
   - {fileID: 349448085}
   m_Father: {fileID: 1702060981}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -74.99988}
-  m_SizeDelta: {x: 600, y: -150.00026}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 4, y: 0}
+  m_SizeDelta: {x: 1680, y: 1289.9998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &510947328
 MonoBehaviour:
@@ -1628,7 +1628,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536889523}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3df0bd9e4a2fe9e4d86c78820a0f4726, type: 3}
   m_Name: 
@@ -1957,8 +1957,8 @@ MonoBehaviour:
   rightArrow: {fileID: 349448088}
   startButton: {fileID: 500135843}
   eventSystem: {fileID: 1233794804}
-  gameManagerObject: {fileID: 0}
-  uiManagerObject: {fileID: 0}
+  gameManagerObject: {fileID: 268653809}
+  uiManagerObject: {fileID: 536889523}
 --- !u!4 &631540423
 Transform:
   m_ObjectHideFlags: 0
@@ -2841,7 +2841,17 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: 08cf818868902c04c970aac48df8dade, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 11a4a6c98134ea0479f0c5a9e81335d0, type: 2}
+      objectReference: {fileID: 9100000, guid: 02e620e57a1beb54fa4b31db0a687b0a, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 08cf818868902c04c970aac48df8dade, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:RightFoot'\n\tTransform
+        'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftHand'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform
+        'mixamorig:Spine1'\n\tTransform 'mixamorig:Spine2'\n\tTransform 'mixamorig:RightUpLeg'\n\tTransform
+        'mixamorig:RightForeArm'\n\tTransform 'mixamorig:LeftUpLeg'\n\tand more ...\n\tFrom
+        animation clip 'mixamo.com'"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3176,7 +3186,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50}
+  m_AnchoredPosition: {x: 0, y: -78.99999}
   m_SizeDelta: {x: 515.0388, y: 106.71619}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &1312591503
@@ -3449,7 +3459,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -189}
+  m_AnchoredPosition: {x: 50, y: -218}
   m_SizeDelta: {x: 767.1737, y: 106.71619}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1627407600

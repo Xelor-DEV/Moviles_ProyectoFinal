@@ -24,6 +24,8 @@ public class GameSceneLoader : SingletonPersistent<GameSceneLoader>
         yield return GlobalSceneManager.Instance.WaitUntilAllOperationsReady(mainLoadOp, additiveOps);
 
         mainLoadOp.allowSceneActivation = true;
+
+
         yield return new WaitUntil(() => mainLoadOp.isDone);
 
         for (int i = 0; i < additiveOps.Count; ++i)
