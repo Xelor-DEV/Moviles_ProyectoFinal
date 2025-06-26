@@ -180,10 +180,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundPrefab: {fileID: 2951539153617971172, guid: bac4a6e764dce0b4b9f24e988e4c2214, type: 3}
-  groundLength: 4.65
+  groundLength: 5
   moveSpeed: 5
-  startPosition: {x: -3.45, y: 0, z: 0}
-  leftBoundary: -15
+  startPosition: {x: -3.4, y: 0, z: 0}
+  leftBoundary: -8.55
 --- !u!4 &134341703
 Transform:
   m_ObjectHideFlags: 0
@@ -1515,10 +1515,10 @@ RectTransform:
   - {fileID: 349448085}
   m_Father: {fileID: 1702060981}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -74.99988}
-  m_SizeDelta: {x: 600, y: -150.00026}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 4, y: 0}
+  m_SizeDelta: {x: 1680, y: 1289.9998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &510947328
 MonoBehaviour:

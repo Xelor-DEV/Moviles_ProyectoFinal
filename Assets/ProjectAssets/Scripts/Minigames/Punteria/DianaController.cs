@@ -7,9 +7,10 @@ public class DianaController : MonoBehaviour
 
     private Vector3 targetPosition;
     private int phase = 0;
-
+    [SerializeField] private TrailRenderer trail;
     void Start()
     {
+        trail = GetComponent<TrailRenderer>();
         SetNewTarget();
     }
 
@@ -20,7 +21,14 @@ public class DianaController : MonoBehaviour
         if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
             SetNewTarget();
     }
-
+    void OnDestroy()
+    {
+        if (trail != null)
+        {
+            trail.Clear();
+            trail.enabled = false; 
+        }
+    }
     public void Hit()
     {
         TargetGameUIManager.Instance.AddHit();
