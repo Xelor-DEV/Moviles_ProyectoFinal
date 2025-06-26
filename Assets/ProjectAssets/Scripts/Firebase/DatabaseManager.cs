@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using Firebase.Database;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -13,6 +14,25 @@ public class PlayerData
     public int energyCores;
     public string currentSkinId;
     public string[] unlockedSkins;
+
+    public float armor;
+    public float power;
+    public float fun;
+    public string lastSaveTime;
+
+
+    public PlayerData()
+    {
+        scrap = 10;
+        prismites = 10;
+        energyCores = 10;
+        currentSkinId = "mighty";
+        unlockedSkins = new string[] { "mighty" };
+        armor = 0.5f;
+        power = 0.5f;
+        fun = 0.5f;
+        lastSaveTime = DateTime.UtcNow.ToString("o");
+    }
 }
 
 public class DatabaseManager : SingletonPersistent<DatabaseManager>
@@ -21,6 +41,7 @@ public class DatabaseManager : SingletonPersistent<DatabaseManager>
     [SerializeField] private UserDataSO userData;
     [SerializeField] private ResourceData resourceData;
     [SerializeField] private RobotSkinDatabase skinDatabase;
+    [SerializeField] private RobotNeeds robotNeeds;
 
     public static Action OnLoadData;
 
@@ -70,41 +91,94 @@ public class DatabaseManager : SingletonPersistent<DatabaseManager>
         {
             PlayerData playerData = JsonUtility.FromJson<PlayerData>(dataTask.Result.GetRawJsonValue());
 
-            resourceData.Scrap = playerData.scrap;
-            resourceData.Prismites = playerData.prismites;
-            resourceData.EnergyCores = playerData.energyCores;
+            if (robotNeeds != null && !string.IsNullOrEmpty(playerData.lastSaveTime))
+            {
+                CalculateAndApplyOfflineDecay(playerData);
+            }
 
-            skinDatabase.CurrentSkin = skinDatabase.FindSkinByID(playerData.currentSkinId);
-
-            UpdateUnlockedSkins(playerData.unlockedSkins);
+            ApplyPlayerData(playerData);
             OnLoadData?.Invoke();
             Debug.Log("LOAD DATA COMPLETE");
             dataLoaded = true;
         }
         else
         {
-            SaveAllData();
+            PlayerData defaultData = new PlayerData();
+            defaultData.userId = userData.UserId;
+            ApplyPlayerData(defaultData);
+            SavePlayerData(defaultData);
             OnLoadData?.Invoke();
             Debug.Log("INITIAL SAVE COMPLETE");
             dataLoaded = true;
         }
     }
 
-    public void SaveAllData()
+    private void CalculateAndApplyOfflineDecay(PlayerData playerData)
     {
-        PlayerData playerData = new PlayerData
+        try
+        {
+            DateTime lastSaveTime = DateTime.Parse(playerData.lastSaveTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            TimeSpan timeSpan = DateTime.UtcNow - lastSaveTime;
+
+            double totalMinutes = timeSpan.TotalMinutes;
+            double intervalsPassed = totalMinutes / robotNeeds.offlineDecayIntervalMinutes;
+
+            if (intervalsPassed > 0)
+            {
+                float decayAmount = (float)(robotNeeds.offlineDecayRatePerInterval * intervalsPassed);
+
+                playerData.armor = Mathf.Clamp01(playerData.armor - decayAmount);
+                playerData.power = Mathf.Clamp01(playerData.power - decayAmount);
+                playerData.fun = Mathf.Clamp01(playerData.fun - decayAmount);
+
+                Debug.Log($"Applied offline decay: {decayAmount} over {totalMinutes} minutes");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Error calculating offline decay: {e.Message}");
+        }
+    }
+
+    private void ApplyPlayerData(PlayerData data)
+    {
+        resourceData.Scrap = data.scrap;
+        resourceData.Prismites = data.prismites;
+        resourceData.EnergyCores = data.energyCores;
+
+        skinDatabase.CurrentSkin = skinDatabase.FindSkinByID(data.currentSkinId);
+        UpdateUnlockedSkins(data.unlockedSkins);
+
+        robotNeeds.Armor = data.armor;
+        robotNeeds.Power = data.power;
+        robotNeeds.Fun = data.fun;
+    }
+    private void SaveAllData()
+    {
+        PlayerData currentData = new PlayerData()
         {
             userId = userData.UserId,
             scrap = resourceData.Scrap,
             prismites = resourceData.Prismites,
             energyCores = resourceData.EnergyCores,
             currentSkinId = skinDatabase.CurrentSkinId,
-            unlockedSkins = skinDatabase.UnlockedSkins
+            unlockedSkins = skinDatabase.UnlockedSkins,
+
+            armor = robotNeeds.Armor,
+            power = robotNeeds.Power,
+            fun = robotNeeds.Fun,
+            lastSaveTime = DateTime.UtcNow.ToString("o")
         };
 
-        string jsonData = JsonUtility.ToJson(playerData);
+        SavePlayerData(currentData);
+    }
+
+    private void SavePlayerData(PlayerData data)
+    {
+        string jsonData = JsonUtility.ToJson(data);
         dbReference.Child(UserPath).SetRawJsonValueAsync(jsonData);
     }
+
 
     private void UpdateUnlockedSkins(string[] unlockedSkinIds)
     {
@@ -123,4 +197,6 @@ public class DatabaseManager : SingletonPersistent<DatabaseManager>
             }
         }
     }
+
+
 }

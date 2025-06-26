@@ -16,6 +16,12 @@ public class RobotNeeds : ScriptableObject
     public float globalDecayRate = 0.01f;
     public float decayInterval = 15f;
 
+    [Header("Offline Decay Settings")]
+    [Tooltip("Interval in minutes for each offline decay step")]
+    public float offlineDecayIntervalMinutes = 10f;
+    [Tooltip("Decay amount per offline interval (0.01 = 1%)")]
+    public float offlineDecayRatePerInterval = 0.015f;
+
     [Header("Armor Settings")]
     public float armorRepairPerScrap = 0.05f;
     public float minArmorForDamage = 0.2f;

@@ -11399,7 +11399,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a3f190d4e259941a3cbc8ac5117d0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotNeeds: {fileID: 11400000, guid: 1cbe07052f2823142b4f7bb2f153dc6e, type: 2}
   audioConfig: {fileID: 11400000, guid: 5d96565883991e341b0b37d12d23ff5c, type: 2}
   returnMessage: {fileID: 1956278057}
 --- !u!4 &1132869303
@@ -13423,6 +13422,7 @@ MonoBehaviour:
   userData: {fileID: 11400000, guid: 9ff76ebb1730bd142ab73e87e523bbf8, type: 2}
   resourceData: {fileID: 11400000, guid: 830e3c735aa281448a25657e6d663f4b, type: 2}
   skinDatabase: {fileID: 11400000, guid: e59dbb0d110d32c49843aeb3d8958f48, type: 2}
+  robotNeeds: {fileID: 11400000, guid: 1cbe07052f2823142b4f7bb2f153dc6e, type: 2}
 --- !u!4 &1280891340
 Transform:
   m_ObjectHideFlags: 0

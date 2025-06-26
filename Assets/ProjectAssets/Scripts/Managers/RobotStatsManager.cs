@@ -20,7 +20,16 @@ public class RobotStats : MonoBehaviour
         }
     }
 
-    void Start()
+    private void OnEnable()
+    {
+        DatabaseManager.OnLoadData += Initialize;
+    }
+
+    private void OnDisable()
+    {
+        DatabaseManager.OnLoadData -= Initialize;
+    }
+    private void Initialize()
     {
         needsConfig.Armor = Mathf.Clamp01(needsConfig.Armor);
         needsConfig.Power = Mathf.Clamp01(needsConfig.Power);

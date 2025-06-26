@@ -7,19 +7,15 @@ public static class SaveSystem
 {
     private static string savePath = Application.persistentDataPath + "/gameSave.sav";
 
-    public static void SaveGame(RobotNeeds robotNeeds, AudioConfig audioConfig)
+    public static void SaveGame(AudioConfig audioConfig)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(savePath, FileMode.Create);
 
         SaveData data = new SaveData();
-        data.armor = robotNeeds.Armor;
-        data.power = robotNeeds.Power;
-        data.fun = robotNeeds.Fun;
         data.masterVolume = audioConfig.MasterVolume;
         data.musicVolume = audioConfig.MusicVolume;
         data.sfxVolume = audioConfig.SfxVolume;
-        data.saveDateTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
 
         formatter.Serialize(stream, data);
         stream.Close();
@@ -48,11 +44,7 @@ public static class SaveSystem
 [Serializable]
 public class SaveData
 {
-    public float armor;
-    public float power;
-    public float fun;
     public float masterVolume;
     public float musicVolume;
     public float sfxVolume;
-    public string saveDateTime;
 }

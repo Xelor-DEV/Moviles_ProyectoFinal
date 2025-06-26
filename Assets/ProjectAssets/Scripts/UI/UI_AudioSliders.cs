@@ -11,6 +11,16 @@ public class UI_AudioSliders : MonoBehaviour
     [Header("References")]
     [SerializeField] private AudioConfig audioConfig;
 
+    private void OnEnable()
+    {
+        SaveManager.OnSaveDataLoaded += LoadAudioSettings;
+    }
+
+    private void OnDisable()
+    {
+        SaveManager.OnSaveDataLoaded -= LoadAudioSettings;
+    }
+
     void Start()
     {
         LoadAudioSettings();
