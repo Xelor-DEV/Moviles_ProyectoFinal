@@ -8,7 +8,7 @@ public class GameUIManager : NonPersistentSingleton<GameUIManager>
     [Header("Tiempo")]
     public float totalTime = 100f;
     private float currentTime;
-    public float timeDecreaseSpeed = 1.5f;
+    public float timeDecreaseSpeed = 3.5f;
 
     [Header("UI")]
     public Slider timeSlider;
@@ -48,11 +48,11 @@ public class GameUIManager : NonPersistentSingleton<GameUIManager>
 
         if (correctSwipesSpeed > 20)
         {
-            timeDecreaseSpeed = 3.5f;
+            timeDecreaseSpeed = 4.2f;
         }
         else if (correctSwipesSpeed > 50)
         {
-            timeDecreaseSpeed = 5;
+            timeDecreaseSpeed = 5.2f;
         }
         if (currentTime <= 0)
         {
@@ -78,9 +78,9 @@ public class GameUIManager : NonPersistentSingleton<GameUIManager>
         }
         correctSwipes++;
         correctSwipesSpeed++;
-        if (correctSwipes >= 3)
+        if (correctSwipes >= 5)
         {
-            int reward = timeSurvived >= 20f ? 5 : 3;
+            int reward = timeSurvived >= 20f ? 1 : 1;
             currentPrismites += reward;
             correctSwipes = 0;
         }

@@ -2,21 +2,26 @@ using UnityEngine;
 using System.Collections.Generic;
 public class ObstacleSpawner : MonoBehaviour
 {
-    public GameObject[] obstaclePrefabs;
+    [System.Serializable]
+    public class ObstaclePair
+    {
+        public GameObject obstacle3D;
+        public GameObject object2D;
+        public string obstacleType;
+    }
+
+    public List<ObstaclePair> obstaclePairs;
     public int initialCount = 10;
     public int batchSize = 5;
     public float distanceBetween = 4f;
     public Vector3 startPosition = new Vector3(6f, 0f, 0f);
+    public Vector3 offset2DObject = new Vector3(0, 2f, 0);
 
     private Queue<GameObject> activeObstacles = new Queue<GameObject>();
     private Vector3 nextSpawnPosition;
     private int clearedSinceLastSpawn = 0;
-    private Dictionary<string, float> obstacleYPositions = new Dictionary<string, float>
-{
-    { "Trash", 0f },
-    { "Bat", 2f },
-    { "Rat", -1f }
-};
+    private int totalSpawned = 0;
+
     void Start()
     {
         nextSpawnPosition = startPosition;
@@ -26,7 +31,7 @@ public class ObstacleSpawner : MonoBehaviour
     public void ReturnToPool(GameObject obj)
     {
         Destroy(obj);
-        activeObstacles.Dequeue(); 
+        activeObstacles.Dequeue();
         clearedSinceLastSpawn++;
 
         if (clearedSinceLastSpawn >= batchSize)
@@ -38,30 +43,37 @@ public class ObstacleSpawner : MonoBehaviour
 
     void SpawnObstacles(int count)
     {
-        List<GameObject> shuffledPrefabs = new List<GameObject>(obstaclePrefabs);
-
-        
-        for (int i = 0; i < shuffledPrefabs.Count; i++)
-        {
-            int randIndex = Random.Range(i, shuffledPrefabs.Count);
-            var temp = shuffledPrefabs[i];
-            shuffledPrefabs[i] = shuffledPrefabs[randIndex];
-            shuffledPrefabs[randIndex] = temp;
-        }
-
         for (int i = 0; i < count; i++)
         {
-            GameObject prefab = shuffledPrefabs[Random.Range(0, shuffledPrefabs.Count)];
-            GameObject obj = Instantiate(prefab, nextSpawnPosition, Quaternion.identity);
 
-            if (obj.TryGetComponent<IObstacle>(out var obs))
+            int randomIndex = Random.Range(0, obstaclePairs.Count);
+            ObstaclePair pair = obstaclePairs[randomIndex];
+
+            
+            GameObject obstacle3D = Instantiate(pair.obstacle3D, nextSpawnPosition, Quaternion.identity);
+
+            
+            if (totalSpawned < initialCount)
+            {
+                
+                GameObject object2D = Instantiate(
+                    pair.object2D,
+                    nextSpawnPosition + offset2DObject,
+                    Quaternion.identity
+                );
+
+       
+                object2D.transform.SetParent(obstacle3D.transform);
+                totalSpawned++;
+            }
+
+            if (obstacle3D.TryGetComponent<IObstacle>(out var obs))
             {
                 obs.SetPooler(this);
             }
 
-            activeObstacles.Enqueue(obj);
+            activeObstacles.Enqueue(obstacle3D);
             nextSpawnPosition += new Vector3(distanceBetween, 0, 0);
         }
     }
-
 }
