@@ -70,45 +70,19 @@ public class RobotNeeds : ScriptableObject
         }
     }
 
-    public void SendNotificationArmor()
+    public float Critical
     {
-        if (armor > max)
+        get
         {
-            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.ArmorHigh);
-            Debug.Log("1");
-        }
-        else if (armor < critical)
-        {
-            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.ArmorLow);
-            Debug.Log("2");
+            return critical;
         }
     }
 
-    public void SendNotificationFun()
+    public float Max
     {
-        if (power > max)
+        get
         {
-            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.PowerHigh);
-            Debug.Log("3");
-        }
-        else if (power < critical)
-        {
-            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.PowerLow);
-            Debug.Log("4");
-        }
-    }
-
-    public void SendNotificationPower()
-    {
-        if (fun > max)
-        {
-            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.FunHigh);
-            Debug.Log("5");
-        }
-        else if (fun < critical)
-        {
-            NotificationSystem.Instance.SendNotification(NotificationInvoker.Instance.FunLow);
-            Debug.Log("6");
+            return max;
         }
     }
 }

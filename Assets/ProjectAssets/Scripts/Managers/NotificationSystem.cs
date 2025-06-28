@@ -5,7 +5,7 @@ using Unity.Notifications.Android;
 using UnityEngine.Android;
 
 
-public class NotificationSystem : NonPersistentSingleton<NotificationSystem>
+public class NotificationSystem : MonoBehaviour
 {
     [Header("Notification Settings")]
     [SerializeField] private NotificationChannelData[] notificationChannels;

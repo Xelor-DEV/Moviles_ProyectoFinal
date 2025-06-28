@@ -14,36 +14,42 @@ public class ResourceManager : MonoBehaviour
     {
         resourceData.Scrap += amount;
         onScrapChanged?.Invoke(resourceData.Scrap);
+        DatabaseManager.Instance.SaveAllData();
     }
 
     public void RemoveScrap(int amount)
     {
         resourceData.Scrap = Mathf.Max(0, resourceData.Scrap - amount);
         onScrapChanged?.Invoke(resourceData.Scrap);
+        DatabaseManager.Instance.SaveAllData();
     }
 
     public void AddPrismites(int amount)
     {
         resourceData.Prismites += amount;
         onPrismitesChanged?.Invoke(resourceData.Prismites);
+        DatabaseManager.Instance.SaveAllData();
     }
 
     public void RemovePrismites(int amount)
     {
         resourceData.Prismites = Mathf.Max(0, resourceData.Prismites - amount);
         onPrismitesChanged?.Invoke(resourceData.Prismites);
+        DatabaseManager.Instance.SaveAllData();
     }
 
     public void AddEnergyCores(int amount)
     {
         resourceData.EnergyCores += amount;
         onEnergyCoresChanged?.Invoke(resourceData.EnergyCores);
+        DatabaseManager.Instance.SaveAllData();
     }
 
     public void RemoveEnergyCores(int amount)
     {
         resourceData.EnergyCores = Mathf.Max(0, resourceData.EnergyCores - amount);
         onEnergyCoresChanged?.Invoke(resourceData.EnergyCores);
+        DatabaseManager.Instance.SaveAllData();
     }
 
     public bool CanAffordScrap(int amount)

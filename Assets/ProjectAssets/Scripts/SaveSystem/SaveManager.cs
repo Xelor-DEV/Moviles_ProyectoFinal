@@ -5,7 +5,6 @@ public class SaveManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private AudioConfig audioConfig;
-    [SerializeField] private UI_ReturnMessage returnMessage;
 
     public static Action OnSaveDataLoaded;
 

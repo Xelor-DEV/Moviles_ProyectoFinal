@@ -22,6 +22,8 @@ public class RunnerManager : NonPersistentSingleton<RunnerManager>
     [SerializeField] private Button menuButton;
     [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private string gameScene;
+    [SerializeField] private RobotNeeds robotNeeds;
+    [SerializeField] private float funAdded = 0.25f;
 
     private float survivalTime = 0f;
     private float coinTimer = 0f;
@@ -83,6 +85,7 @@ public class RunnerManager : NonPersistentSingleton<RunnerManager>
     private void GoToMenu()
     {
         Time.timeScale = 1f;
+        robotNeeds.Fun = Mathf.Clamp01(robotNeeds.Fun + funAdded);
         StartCoroutine(GlobalSceneManager.Instance.LoadSceneAsync(gameScene));
     }
 }

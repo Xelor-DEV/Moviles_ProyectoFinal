@@ -60,7 +60,10 @@ public class DatabaseManager : SingletonPersistent<DatabaseManager>
     {
         base.Awake();
         dbReference = FirebaseDatabase.DefaultInstance.RootReference;
+    }
 
+    private void Start()
+    {
         if (!dataLoaded && userData.IsLoggedIn)
         {
             StartCoroutine(LoadUserData());
@@ -123,6 +126,8 @@ public class DatabaseManager : SingletonPersistent<DatabaseManager>
             double totalMinutes = timeSpan.TotalMinutes;
             double intervalsPassed = totalMinutes / robotNeeds.offlineDecayIntervalMinutes;
 
+            UI_ReturnMessage.Instance.ShowMessage(totalMinutes);
+
             if (intervalsPassed > 0)
             {
                 float decayAmount = (float)(robotNeeds.offlineDecayRatePerInterval * intervalsPassed);
@@ -146,14 +151,17 @@ public class DatabaseManager : SingletonPersistent<DatabaseManager>
         resourceData.Prismites = data.prismites;
         resourceData.EnergyCores = data.energyCores;
 
-        skinDatabase.CurrentSkin = skinDatabase.FindSkinByID(data.currentSkinId);
         UpdateUnlockedSkins(data.unlockedSkins);
+
+        RobotSkinData robotSkinData = skinDatabase.FindSkinByID(data.currentSkinId);
+        SkinManager.Instance.ChangeSkin(robotSkinData);
 
         robotNeeds.Armor = data.armor;
         robotNeeds.Power = data.power;
         robotNeeds.Fun = data.fun;
     }
-    private void SaveAllData()
+
+    public void SaveAllData()
     {
         PlayerData currentData = new PlayerData()
         {
@@ -197,6 +205,4 @@ public class DatabaseManager : SingletonPersistent<DatabaseManager>
             }
         }
     }
-
-
 }

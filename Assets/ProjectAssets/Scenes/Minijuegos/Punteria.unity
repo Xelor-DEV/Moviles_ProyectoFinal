@@ -2509,6 +2509,8 @@ MonoBehaviour:
   menuButton: {fileID: 71869448}
   gameScene: LoadScenes
   resourceManager: {fileID: 815793253}
+  robotNeeds: {fileID: 11400000, guid: 1cbe07052f2823142b4f7bb2f153dc6e, type: 2}
+  funAdded: 0.25
 --- !u!4 &1089940492
 Transform:
   m_ObjectHideFlags: 0

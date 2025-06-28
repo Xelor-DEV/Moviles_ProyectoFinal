@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class NotificationInvoker : NonPersistentSingleton<NotificationInvoker>
+public class NotificationInvoker : MonoBehaviour
 {
     [Header("Notifications Data References")]
     [SerializeField] private NotificationConfig funHigh;

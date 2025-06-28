@@ -55,6 +55,8 @@ public class UI_PowerStation : MonoBehaviour
     {
         isCharging = true;
         chargingIcon.sprite = connectedSprite;
+
+        AudioManager.Instance.PlaySfx(1);
     }
 
     public void SetDisconnectedState()
@@ -67,6 +69,8 @@ public class UI_PowerStation : MonoBehaviour
             StopCoroutine(chargingRoutine);
             chargingRoutine = null;
         }
+
+        AudioManager.Instance.PlaySfx(2);
     }
 
     private void StartCharging()
@@ -87,6 +91,8 @@ public class UI_PowerStation : MonoBehaviour
 
             resourceManager.RemoveEnergyCores(1);
 
+            DatabaseManager.Instance.SaveAllData();
+
             if (uiResources != null)
             {
                 uiResources.UpdateEnergyCoresText(resourceData.EnergyCores);
@@ -102,7 +108,6 @@ public class UI_PowerStation : MonoBehaviour
             {
                 SetDisconnectedState();
             }
-            robotNeeds.SendNotificationPower();
         }
 
         if (!resourceManager.CanAffordEnergyCores(1))

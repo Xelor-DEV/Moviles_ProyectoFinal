@@ -1,15 +1,10 @@
 ﻿using UnityEngine;
 
-public class SkinManager : MonoBehaviour
+public class SkinManager : NonPersistentSingleton<SkinManager>
 {
     [Header("References")]
     [SerializeField] private RobotSkinDatabase robotSkins;
     [SerializeField] private Material robotMaterial;
-
-    void Start()
-    {
-        ApplySkin(robotSkins.CurrentSkin);
-    }
 
     public void ChangeSkin(RobotSkinData newSkin)
     {

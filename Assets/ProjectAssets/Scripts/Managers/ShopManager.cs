@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
-using System.Collections;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
@@ -20,6 +20,8 @@ public class ShopManager : MonoBehaviour
         public RobotSkinData skinData;
         public TMP_Text costText;
         public TMP_Text skinNameText;
+        public Image iconPrismites;
+        public Button button;
         public int prismitesCost;
     }
 
@@ -34,6 +36,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private ResourceData resourceData;
     [SerializeField] private SkinManager skinManager;
     [SerializeField] private UI_Resources uiResources;
+    [SerializeField] private UI_Closet uiCloset;
 
     private void Start()
     {
@@ -64,12 +67,30 @@ public class ShopManager : MonoBehaviour
     {
         for (int i = 0; i < skinItems.Length; ++i)
         {
-            skinItems[i].costText.text = "x" + skinItems[i].prismitesCost;
+            UpdateSkinItemUI(i);
             skinItems[i].skinNameText.text = skinItems[i].skinData.SkinName;
-            if (skinItems[i].skinData.IsUnlocked == true)
-            {
-                skinItems[i].costText.text = "";
-            }
+        }
+    }
+
+    private void UpdateSkinItemUI(int index)
+    {
+        bool isUnlocked = skinManager.IsSkinUnlocked(skinItems[index].skinData.SkinId);
+
+        if (isUnlocked)
+        {
+            skinItems[index].costText.text = "";
+            skinItems[index].iconPrismites.gameObject.SetActive(false);
+            skinItems[index].button.interactable = false;
+            
+            uiCloset.UnlockSkin(index);
+        }
+        else
+        {
+            skinItems[index].costText.text = "x" + skinItems[index].prismitesCost;
+            skinItems[index].iconPrismites.gameObject.SetActive(true);
+            skinItems[index].button.interactable = true;
+
+            uiCloset.LockSkin(index);
         }
     }
 
@@ -87,6 +108,8 @@ public class ShopManager : MonoBehaviour
         {
             resourceManager.RemovePrismites(item.prismitesCost);
             resourceManager.AddEnergyCores(item.energyCoresReward);
+
+            DatabaseManager.Instance.SaveAllData();
 
             uiResources.UpdatePrismitesText(resourceData.Prismites);
             uiResources.UpdateEnergyCoresText(resourceData.EnergyCores);
@@ -118,12 +141,15 @@ public class ShopManager : MonoBehaviour
             resourceManager.RemovePrismites(item.prismitesCost);
             skinManager.UnlockSkin(item.skinData.SkinId);
 
+            UpdateSkinItemUI(index);
+
+            DatabaseManager.Instance.SaveAllData();
             uiResources.UpdatePrismitesText(resourceData.Prismites);
             Debug.Log("Skin unlocked: " + item.skinData.SkinName);
         }
         else
         {
-            Debug.Log("You do not have enough limits for this skin");
+            Debug.Log("You do not have enough prismites for this skin");
         }
     }
 }

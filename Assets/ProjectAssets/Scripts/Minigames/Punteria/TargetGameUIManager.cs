@@ -19,6 +19,9 @@ public class TargetGameUIManager : NonPersistentSingleton<TargetGameUIManager>
     [SerializeField] private string gameScene;
 
     [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private RobotNeeds robotNeeds;
+
+    [SerializeField] private float funAdded = 0.25f;
     private int currentPrismites;
     private int hitCount;
 
@@ -68,6 +71,7 @@ public class TargetGameUIManager : NonPersistentSingleton<TargetGameUIManager>
     private void GoToMenu()
     {
         Time.timeScale = 1;
+        robotNeeds.Fun = Mathf.Clamp01(robotNeeds.Fun + funAdded);
         StartCoroutine(GlobalSceneManager.Instance.LoadSceneAsync(gameScene));
     }
 }

@@ -7,6 +7,8 @@ public class RobotStats : MonoBehaviour
     [SerializeField] private RobotNeeds needsConfig;
     [SerializeField] private UI_NeedsBars needsBars;
     [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private NotificationInvoker notificationInvoker;
+    [SerializeField] private NotificationSystem notificationSystem;
 
     private int ArmorBarIndex = 0;
     private int PowerBarIndex = 1;
@@ -18,6 +20,11 @@ public class RobotStats : MonoBehaviour
         {
             return needsConfig;
         }
+    }
+
+    private void Start()
+    {
+        Initialize();
     }
 
     private void OnEnable()
@@ -54,9 +61,11 @@ public class RobotStats : MonoBehaviour
         needsBars.SetBarValueAnimated(PowerBarIndex, needsConfig.Power);
         needsBars.SetBarValueAnimated(FunBarIndex, needsConfig.Fun);
 
-        needsConfig.SendNotificationPower();
-        needsConfig.SendNotificationFun();
-        needsConfig.SendNotificationArmor();
+        DatabaseManager.Instance.SaveAllData();
+
+        SendNotificationArmor();
+        SendNotificationPower();
+        SendNotificationFun();
 
         StartCoroutine(DecayNeeds());
     }
@@ -75,11 +84,54 @@ public class RobotStats : MonoBehaviour
             needsBars.SetBarValueAnimated(ArmorBarIndex, needsConfig.Armor);
         }
 
-        needsConfig.SendNotificationArmor();
+        SendNotificationArmor();
     }
 
     public bool CanRepair(int scrapAmount)
     {
         return resourceManager.CanAffordScrap(scrapAmount);
+    }
+
+
+    public void SendNotificationArmor()
+    {
+        if (needsConfig.Armor > needsConfig.Max)
+        {
+            notificationSystem.SendNotification(notificationInvoker.ArmorHigh);
+            Debug.Log("1");
+        }
+        else if (needsConfig.Armor < needsConfig.Critical)
+        {
+            notificationSystem.SendNotification(notificationInvoker.ArmorLow);
+            Debug.Log("2");
+        }
+    }
+
+    public void SendNotificationPower()
+    {
+        if (needsConfig.Power > needsConfig.Max)
+        {
+            notificationSystem.SendNotification(notificationInvoker.PowerHigh);
+            Debug.Log("3");
+        }
+        else if (needsConfig.Power < needsConfig.Critical)
+        {
+            notificationSystem.SendNotification(notificationInvoker.PowerLow);
+            Debug.Log("4");
+        }
+    }
+
+    public void SendNotificationFun()
+    {
+        if (needsConfig.Fun > needsConfig.Max)
+        {
+            notificationSystem.SendNotification(notificationInvoker.FunHigh);
+            Debug.Log("5");
+        }
+        else if (needsConfig.Fun < needsConfig.Critical)
+        {
+            notificationSystem.SendNotification(notificationInvoker.FunLow);
+            Debug.Log("6");
+        }
     }
 }
