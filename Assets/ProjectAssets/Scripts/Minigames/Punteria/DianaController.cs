@@ -18,8 +18,12 @@ public class DianaController : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+        if (Vector3.Distance(transform.position, targetPosition) < 0.1f) 
+        {
             SetNewTarget();
+
+        }
+         
     }
     void OnDestroy()
     {
@@ -33,9 +37,9 @@ public class DianaController : MonoBehaviour
     {
         TargetGameUIManager.Instance.AddHit();
         phase = Mathf.Min(phase + 1, 2);
-        speed += 0.5f;
+        speed += 0.15f;
 
-        float minScale = 1;
+        float minScale = 1f;
         float scaleFactor = 0.9f;
 
         Vector3 newScale = transform.localScale * scaleFactor;

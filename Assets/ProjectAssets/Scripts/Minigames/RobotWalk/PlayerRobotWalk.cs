@@ -8,22 +8,33 @@ public class PlayerRobotWalk : MonoBehaviour
     private Rigidbody rb;
     public float detectionRadius = 1.5f;
 
+
+    private Animator robotAnimator;
+    public float attackAnimDuration = 0.5f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+       
+        robotAnimator = GetComponentInChildren<Animator>();
+
+        
+        if (robotAnimator != null)
+        {
+            robotAnimator.SetFloat("AttackSpeed", 1f / attackAnimDuration); // Ajusta velocidad
+        }
     }
 
     void Update()
     {
- 
-
         if (Input.touchCount == 0) return;
 
         Touch touch = Input.GetTouch(0);
 
         if (touch.phase == TouchPhase.Began)
+        {
             startTouchPosition = touch.position;
-
+        }
         else if (touch.phase == TouchPhase.Ended)
         {
             endTouchPosition = touch.position;
@@ -46,6 +57,14 @@ public class PlayerRobotWalk : MonoBehaviour
     void HandleSwipe(string type)
     {
         Debug.Log($"Swipe detectado: {type}");
+
+ 
+        if (robotAnimator != null)
+        {
+            robotAnimator.Play("Attack", -1, 0f); 
+        }
+
+    
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
         bool found = false;
         foreach (Collider col in colliders)
@@ -59,15 +78,14 @@ public class PlayerRobotWalk : MonoBehaviour
                 GameUIManager.Instance.HandleCorrectSwipe();
                 found = true;
                 break;
-
             }
         }
-        if(!found)
+        if (!found)
         {
-            GameUIManager.Instance.HandleWrongSwipe();   
+            GameUIManager.Instance.HandleWrongSwipe();
         }
-
     }
+
     IEnumerator SmoothMove(Vector3 from, Vector3 to, float duration)
     {
         float elapsed = 0f;

@@ -83,11 +83,12 @@ public class PlayerRunner : MonoBehaviour
 
             if (deltaX > 0)
             {
-                MoveRight();
+                MoveLeft();
+                
             }
             else
             {
-                MoveLeft();
+                MoveRight();
             }
         }
     }
