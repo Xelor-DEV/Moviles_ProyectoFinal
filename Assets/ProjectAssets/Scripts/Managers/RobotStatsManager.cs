@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class RobotStats : MonoBehaviour
+public class RobotStatsManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private RobotNeeds needsConfig;

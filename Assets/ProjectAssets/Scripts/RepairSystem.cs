@@ -26,7 +26,7 @@ public class RepairSystem : MonoBehaviour
     private Vector3 originalPosition;
     private bool isDragging = false;
     private bool isRepairing = false;
-    private RobotStats currentRobot;
+    private RobotStatsManager currentRobot;
     private float scrapAccumulator = 0f;
     private bool effectsActive = false;
     private bool hadSufficientScrapLastFrame = true;
@@ -159,7 +159,7 @@ public class RepairSystem : MonoBehaviour
         {
             if (hit.CompareTag(robotTag))
             {
-                RobotStats robot = hit.GetComponent<RobotStats>();
+                RobotStatsManager robot = hit.GetComponent<RobotStatsManager>();
                 if (robot != null)
                 {
                     currentRobot = robot;
@@ -184,7 +184,9 @@ public class RepairSystem : MonoBehaviour
 
         if (weldingSoundIndex >= 0)
         {
-            AudioManager.Instance.PlaySfx(weldingSoundIndex);
+            AudioSource source = AudioManager.Instance.GetAudioSourceByIndex(weldingSoundIndex);
+            source.clip = AudioManager.Instance.SfxClips[weldingSoundIndex];
+            source.Play();
         }
     }
 
@@ -196,7 +198,8 @@ public class RepairSystem : MonoBehaviour
         {
             weldingParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
-        AudioManager.Instance.StopSfx(weldingSoundIndex);
+        AudioSource source = AudioManager.Instance.GetAudioSourceByIndex(weldingSoundIndex);
+        source.Stop();
     }
 
     private void OnDrawGizmos()

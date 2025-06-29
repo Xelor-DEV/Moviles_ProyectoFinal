@@ -52,6 +52,14 @@ public class AudioManager : NonPersistentSingleton<AudioManager>
         }
     }
 
+    public AudioClip[] SfxClips
+    {
+        get
+        {
+            return sfxClips;
+        }
+    }
+
     private void Awake()
     {
         InitializeSfxSources();

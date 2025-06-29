@@ -27,18 +27,20 @@ public class GameUIManager : NonPersistentSingleton<GameUIManager>
     [SerializeField] private RobotNeeds robotNeeds;
     [SerializeField] private float funAdded = 0.25f;
 
-    private int currentPrismites;
+    private int pendingPrismites = 0;
     private int correctSwipes = 0;
     private int correctSwipesSpeed = 0;
     private float timeSurvived = 0f;
+    private bool gameEnded = false;
 
     void Start()
     {
         Time.timeScale = 1f;
-        currentPrismites = 0;
+        pendingPrismites = 0;
         currentTime = totalTime;
         UpdateUI();
         gameOverPanel.SetActive(false);
+        gameEnded = false;
 
         retryButton.onClick.AddListener(RestartGame);
         menuButton.onClick.AddListener(GoToMenu);
@@ -46,17 +48,20 @@ public class GameUIManager : NonPersistentSingleton<GameUIManager>
 
     void Update()
     {
+        if (gameEnded) return;
+
         currentTime -= Time.deltaTime * timeDecreaseSpeed;
         timeSurvived += Time.deltaTime;
 
-        if (correctSwipesSpeed > 20)
-        {
-            timeDecreaseSpeed = 4.2f;
-        }
-        else if (correctSwipesSpeed > 50)
+        if (correctSwipesSpeed > 50)
         {
             timeDecreaseSpeed = 5.2f;
         }
+        else if (correctSwipesSpeed > 20)
+        {
+            timeDecreaseSpeed = 4.2f;
+        }
+
         if (currentTime <= 0)
         {
             currentTime = 0;
@@ -70,32 +75,30 @@ public class GameUIManager : NonPersistentSingleton<GameUIManager>
     {
         timeSlider.value = currentTime / totalTime;
         timeText.text = Mathf.CeilToInt(currentTime).ToString();
-        coinText.text = $"Prismites: {currentPrismites}";
+        coinText.text = $"Prismites: {pendingPrismites}";
     }
 
     public void HandleCorrectSwipe()
     {
-        if (currentTime < 99)
-        {
-            currentTime += 1;
-        }
+        if (gameEnded) return;
+
+        currentTime = Mathf.Min(currentTime + 1f, 99f);
+
         correctSwipes++;
         correctSwipesSpeed++;
+
         if (correctSwipes >= 5)
         {
-            int reward = timeSurvived >= 20f ? 1 : 1;
-            currentPrismites += reward;
+            pendingPrismites++;
             correctSwipes = 0;
         }
     }
 
     public void HandleWrongSwipe()
     {
-        currentTime -= 15f;
-        if (currentTime < 0)
-        {
-            currentTime = 0;
-        }
+        if (gameEnded) return;
+
+        currentTime = Mathf.Max(currentTime - 15f, 0f);
     }
 
     void RestartGame()
@@ -113,12 +116,14 @@ public class GameUIManager : NonPersistentSingleton<GameUIManager>
 
     void EndGame()
     {
-        if (resourceManager != null)
+        gameEnded = true;
+
+        if (pendingPrismites > 0 && resourceManager != null)
         {
-            resourceManager.AddPrismites(currentPrismites);
+            resourceManager.AddPrismites(pendingPrismites);
         }
 
-        finalCoinsText.text = $"Prismites collected: {currentPrismites}";
+        finalCoinsText.text = $"Prismites collected: {pendingPrismites}";
         finalTimeText.text = $"Time survived: {Mathf.FloorToInt(timeSurvived)}s";
         gameOverPanel.SetActive(true);
         Time.timeScale = 0f;

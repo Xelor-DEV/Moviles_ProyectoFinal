@@ -4656,6 +4656,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 831643125}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: StopSfx
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &543374141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11965,8 +11977,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1459369861}
   m_HandleRect: {fileID: 1459369860}
   m_Direction: 2
-  m_Value: 1.0000006
-  m_Size: 0.6411969
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13664,7 +13676,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1280891338}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c06aa2b497138d642bc90f3683ad203d, type: 3}
   m_Name: 
@@ -14649,7 +14661,8 @@ GameObject:
   - component: {fileID: 1358593213}
   - component: {fileID: 1358593212}
   - component: {fileID: 1358593211}
-  - component: {fileID: 1358593215}
+  - component: {fileID: 1358593216}
+  - component: {fileID: 1358593217}
   m_Layer: 0
   m_Name: Robot_Neo
   m_TagString: Robot
@@ -14743,7 +14756,7 @@ Transform:
   - {fileID: 1151146720}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1358593215
+--- !u!114 &1358593216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14752,7 +14765,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1358593209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f69d990cad0aa4e4b9ebea7d779cca1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 16bf7c97fb24def42a51c94087576fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotAnimator: {fileID: 1358593211}
+  robotStats: {fileID: 1358593217}
+  minDanceDelay: 20
+  maxDanceDelay: 30
+  ArmorLowParam: ArmorLow
+  PowerLowParam: PowerLow
+  FunLowParam: FunLow
+  danceParams:
+  - Dance1
+  - Dance2
+  - Dance3
+--- !u!114 &1358593217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358593209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc410fe2f72bc64588df616eb339081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   needsConfig: {fileID: 11400000, guid: 1cbe07052f2823142b4f7bb2f153dc6e, type: 2}
@@ -15875,7 +15911,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2048233983}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.3588031}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
