@@ -10,14 +10,25 @@ public class ObstacleMover : MonoBehaviour
     {
         if (RunnerManager.Instance.isGameOver) return;
 
-   
+     
         float direction = moveRight ? 1f : -1f;
         transform.Translate(Vector3.right * direction * speed * Time.deltaTime);
 
     
-        if ((!moveRight && transform.position.x < destroyXPosition) || (moveRight && transform.position.x > destroyXPosition))
+        if ((!moveRight && transform.position.x < destroyXPosition) ||
+            (moveRight && transform.position.x > destroyXPosition))
         {
-            Destroy(gameObject);
+            
+            PooledObject pooled = GetComponent<PooledObject>();
+            if (pooled != null && pooled.runner != null)
+            {
+                pooled.runner.ReturnToPool(gameObject);
+            }
+            else
+            {
+                
+                Destroy(gameObject);
+            }
         }
     }
 }
