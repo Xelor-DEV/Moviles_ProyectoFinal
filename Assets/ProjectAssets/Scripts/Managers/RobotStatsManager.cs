@@ -14,6 +14,13 @@ public class RobotStatsManager : MonoBehaviour
     private int PowerBarIndex = 1;
     private int FunBarIndex = 2;
 
+    private bool armorCriticalNotified = false;
+    private bool armorMaxNotified = false;
+    private bool powerCriticalNotified = false;
+    private bool powerMaxNotified = false;
+    private bool funCriticalNotified = false;
+    private bool funMaxNotified = false;
+
     public RobotNeeds NeedsConfig
     {
         get
@@ -92,46 +99,72 @@ public class RobotStatsManager : MonoBehaviour
         return resourceManager.CanAffordScrap(scrapAmount);
     }
 
-
     public void SendNotificationArmor()
     {
-        if (needsConfig.Armor > needsConfig.Max)
+        if (needsConfig.Armor >= needsConfig.Critical && needsConfig.Armor <= needsConfig.Max)
+        {
+            armorCriticalNotified = false;
+            armorMaxNotified = false;
+            return;
+        }
+
+        if (needsConfig.Armor > needsConfig.Max && !armorMaxNotified)
         {
             notificationSystem.SendNotification(notificationInvoker.ArmorHigh);
-            Debug.Log("1");
+            armorMaxNotified = true;
+            armorCriticalNotified = false;
         }
-        else if (needsConfig.Armor < needsConfig.Critical)
+        else if (needsConfig.Armor < needsConfig.Critical && !armorCriticalNotified)
         {
             notificationSystem.SendNotification(notificationInvoker.ArmorLow);
-            Debug.Log("2");
+            armorCriticalNotified = true;
+            armorMaxNotified = false;
         }
     }
 
     public void SendNotificationPower()
     {
-        if (needsConfig.Power > needsConfig.Max)
+        if (needsConfig.Power >= needsConfig.Critical && needsConfig.Power <= needsConfig.Max)
+        {
+            powerCriticalNotified = false;
+            powerMaxNotified = false;
+            return;
+        }
+
+        if (needsConfig.Power > needsConfig.Max && !powerMaxNotified)
         {
             notificationSystem.SendNotification(notificationInvoker.PowerHigh);
-            Debug.Log("3");
+            powerMaxNotified = true;
+            powerCriticalNotified = false;
         }
-        else if (needsConfig.Power < needsConfig.Critical)
+        else if (needsConfig.Power < needsConfig.Critical && !powerCriticalNotified)
         {
             notificationSystem.SendNotification(notificationInvoker.PowerLow);
-            Debug.Log("4");
+            powerCriticalNotified = true;
+            powerMaxNotified = false;
         }
     }
 
     public void SendNotificationFun()
     {
-        if (needsConfig.Fun > needsConfig.Max)
+        if (needsConfig.Fun >= needsConfig.Critical && needsConfig.Fun <= needsConfig.Max)
+        {
+            funCriticalNotified = false;
+            funMaxNotified = false;
+            return;
+        }
+
+        if (needsConfig.Fun > needsConfig.Max && !funMaxNotified)
         {
             notificationSystem.SendNotification(notificationInvoker.FunHigh);
-            Debug.Log("5");
+            funMaxNotified = true;
+            funCriticalNotified = false;
         }
-        else if (needsConfig.Fun < needsConfig.Critical)
+        else if (needsConfig.Fun < needsConfig.Critical && !funCriticalNotified)
         {
             notificationSystem.SendNotification(notificationInvoker.FunLow);
-            Debug.Log("6");
+            funCriticalNotified = true;
+            funMaxNotified = false;
         }
     }
 }

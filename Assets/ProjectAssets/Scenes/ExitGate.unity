@@ -8402,7 +8402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicAudioSource: {fileID: 808781293}
   musicClips:
-  - {fileID: 8300000, guid: 3d7566f7f574f3f468d1ed8319899921, type: 3}
+  - {fileID: 8300000, guid: da1cee96dd965ff43a54838c61e2a355, type: 3}
   sfxClips:
   - {fileID: 8300000, guid: b9af205ef7da59a4a86a9631374a09b4, type: 3}
   - {fileID: 8300000, guid: 0406d23b5af940848abb02bff01c57fc, type: 3}
@@ -10026,8 +10026,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2011874312}
   m_HandleRect: {fileID: 2011874311}
   m_Direction: 2
-  m_Value: 1.0000001
-  m_Size: 0.5347351
+  m_Value: 1
+  m_Size: 0.4598653
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10248,7 +10248,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -434}
-  m_SizeDelta: {x: 1363.9, y: 1463.3092}
+  m_SizeDelta: {x: 1363.9, y: 1834.6537}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1013516956
 MonoBehaviour:
@@ -10271,7 +10271,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Programers:\nMiguel Angel Villanueva Alejo\nDennis Edward Mucha Rodriguez\n\nNeo
-    Robot 3D Model: \nWilber Antonio Vasquez Tisza\n\nSilent GUI by Prinbles \n"
+    Robot 3D Model: \nWilber Antonio Vasquez Tisza\n\nSci-fi Garage Model:\nAdelaide
+    Essex\n\nUI:\nSilent GUI by Prinbles\n\nMusic and Sound Effects:\nExtracted from
+    Gravity Circuit\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f06bc56a25462cf4dbf55ad2574f4915, type: 2}
   m_sharedMaterial: {fileID: 1565202249590213916, guid: f06bc56a25462cf4dbf55ad2574f4915, type: 2}
@@ -17699,7 +17701,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 2032.4597}
+  m_SizeDelta: {x: 0, y: 2363.3606}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1632799964 stripped
 MonoBehaviour:
@@ -20413,7 +20415,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1368757695}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.4652648}
+  m_AnchorMin: {x: 0, y: 0.54013467}
   m_AnchorMax: {x: 1, y: 0.99999994}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
