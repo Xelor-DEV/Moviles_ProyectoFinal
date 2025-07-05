@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8707972913124315540}
   - component: {fileID: 1595954261524932006}
+  - component: {fileID: 229608227362746256}
+  - component: {fileID: 3736424169166591334}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Obstacle
@@ -54,6 +56,35 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.3605476
   m_Center: {x: 0.12007719, y: 0.08266491, z: 0.16796988}
+--- !u!114 &229608227362746256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4403503395789573813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93dabd3fba51bda47b1b221e016fb038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4403503395789573813}
+--- !u!114 &3736424169166591334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4403503395789573813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc2c0b31537cd94ba16c9425dce0364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  destroyXPosition: -15
+  runner: {fileID: 0}
+  isPickup: 0
 --- !u!1001 &5845646637214936730
 PrefabInstance:
   m_ObjectHideFlags: 0

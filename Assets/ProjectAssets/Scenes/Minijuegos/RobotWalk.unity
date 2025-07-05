@@ -2226,7 +2226,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 20
   field of view: 60
   orthographic: 1
   orthographic size: 5
@@ -2254,7 +2254,7 @@ Transform:
   m_GameObject: {fileID: 691194027}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.63, y: 1.81, z: -2.3899999}
+  m_LocalPosition: {x: 1.3, y: 1.81, z: -2.3899999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5272,6 +5272,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ca043abc93d5cc448b50d3683b7bc8ad, type: 3}
   sfxClips:
   - {fileID: 8300000, guid: 0406d23b5af940848abb02bff01c57fc, type: 3}
+  - {fileID: 8300000, guid: dd02ea042ed0ce54cbe21a04014cf75c, type: 3}
+  - {fileID: 8300000, guid: 7f51dfb125b9f17409985458afb74123, type: 3}
   audioConfig: {fileID: 11400000, guid: 5d96565883991e341b0b37d12d23ff5c, type: 2}
   playMusicOnStart: 1
   defaultMusicIndex: 0

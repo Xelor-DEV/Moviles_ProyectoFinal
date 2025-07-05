@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class RobotStatsManager : MonoBehaviour
@@ -9,6 +10,9 @@ public class RobotStatsManager : MonoBehaviour
     [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private NotificationInvoker notificationInvoker;
     [SerializeField] private NotificationSystem notificationSystem;
+
+    [Header("Events")]
+    public UnityEvent OnPowerUpdate;
 
     private int ArmorBarIndex = 0;
     private int PowerBarIndex = 1;
@@ -73,6 +77,8 @@ public class RobotStatsManager : MonoBehaviour
         SendNotificationArmor();
         SendNotificationPower();
         SendNotificationFun();
+
+        OnPowerUpdate?.Invoke();
 
         StartCoroutine(DecayNeeds());
     }

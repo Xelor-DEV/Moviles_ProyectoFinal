@@ -14,6 +14,7 @@ public class RobotShooter : MonoBehaviour
             Vector3 touchWorldPos = GetTouchWorldPosition(Input.GetTouch(0).position);
             Shoot(touchWorldPos);
             hasShot = true;
+            AudioManager.Instance.PlaySfx(2);
         }
     }
 

@@ -130,11 +130,13 @@ public class PlayerRunner : MonoBehaviour
         if (other.CompareTag("Obstacle"))
         {
             RunnerManager.Instance.ShowGameOverPanel();
+            AudioManager.Instance.PlaySfx(2);
         }
         else if (other.CompareTag("Pickup"))
         {
             RunnerManager.Instance.counterData.AddPickup();
             other.gameObject.SetActive(false);
+            AudioManager.Instance.PlaySfx(1);
         }
     }
 }

@@ -3,32 +3,31 @@ using UnityEngine;
 public class ObstacleMover : MonoBehaviour
 {
     public float speed = 5f;
-    public bool moveRight = false;
     public float destroyXPosition = -15f;
+    public ExternalRunner runner;
+    public bool isPickup;
+
+    private Vector3 movement;
+    private float accumulatedTime;
 
     void Update()
     {
         if (RunnerManager.Instance.isGameOver) return;
 
-     
-        float direction = moveRight ? 1f : -1f;
-        transform.Translate(Vector3.right * direction * speed * Time.deltaTime);
+        accumulatedTime += Time.deltaTime;
 
-    
-        if ((!moveRight && transform.position.x < destroyXPosition) ||
-            (moveRight && transform.position.x > destroyXPosition))
+        float fixedStep = Time.fixedDeltaTime;
+        while (accumulatedTime >= fixedStep)
         {
-            
-            PooledObject pooled = GetComponent<PooledObject>();
-            if (pooled != null && pooled.runner != null)
-            {
-                pooled.runner.ReturnToPool(gameObject);
-            }
-            else
-            {
-                
-                Destroy(gameObject);
-            }
+            movement = Vector3.right * -speed * fixedStep;
+            accumulatedTime -= fixedStep;
+        }
+
+        transform.position += movement * (Time.deltaTime / fixedStep);
+
+        if (transform.position.x < destroyXPosition)
+        {
+            runner?.ReturnToPool(gameObject, isPickup);
         }
     }
 }

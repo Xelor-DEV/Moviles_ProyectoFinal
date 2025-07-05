@@ -22,11 +22,8 @@ public class ExternalRunner : MonoBehaviour
     private float nextSpawnTime;
     private System.Random random = new System.Random();
 
- 
     private Dictionary<GameObject, Queue<GameObject>> obstaclePools;
     private Queue<GameObject> pickupPool;
-    private int initialPoolSize = 10;
-    private Dictionary<GameObject, GameObject> instanceToPrefabMap;
 
     void Start()
     {
@@ -37,40 +34,49 @@ public class ExternalRunner : MonoBehaviour
     {
         obstaclePools = new Dictionary<GameObject, Queue<GameObject>>();
         pickupPool = new Queue<GameObject>();
-        instanceToPrefabMap = new Dictionary<GameObject, GameObject>();
 
-  
         foreach (GameObject prefab in obstaclePrefabs)
         {
             Queue<GameObject> pool = new Queue<GameObject>();
-            for (int i = 0; i < initialPoolSize; i++)
+            for (int i = 0; i < 5; i++)
             {
-                GameObject obj = CreatePooledObject(prefab);
+                GameObject obj = Instantiate(prefab);
+                obj.SetActive(false);
+
+                if (obj.TryGetComponent(out PooledObject pooledObj))
+                {
+                    pooledObj.prefab = prefab;
+                }
+
+                if (obj.TryGetComponent(out ObstacleMover mover))
+                {
+                    mover.runner = this;
+                }
+
                 pool.Enqueue(obj);
             }
             obstaclePools.Add(prefab, pool);
         }
 
-
-        for (int i = 0; i < initialPoolSize; i++)
+        for (int i = 0; i < 5; i++)
         {
-            GameObject obj = CreatePooledObject(pickupPrefab);
+            GameObject obj = Instantiate(pickupPrefab);
+            obj.SetActive(false);
+
+            if (obj.TryGetComponent(out PooledObject pooledObj))
+            {
+                pooledObj.prefab = pickupPrefab;
+            }
+
+            if (obj.TryGetComponent(out ObstacleMover mover))
+            {
+                mover.runner = this;
+            }
+
             pickupPool.Enqueue(obj);
         }
     }
 
-    private GameObject CreatePooledObject(GameObject prefab)
-    {
-        GameObject obj = Instantiate(prefab);
-        obj.SetActive(false);
-
-       
-        PooledObject pooledObj = obj.AddComponent<PooledObject>();
-        pooledObj.prefab = prefab;
-        pooledObj.runner = this;
-
-        return obj;
-    }
 
     void Update()
     {
@@ -79,17 +85,13 @@ public class ExternalRunner : MonoBehaviour
             SpawnObjects();
             nextSpawnTime = Time.time + 1f / spawnRate;
         }
+
         speedIncreaseTimer += Time.deltaTime;
         if (speedIncreaseTimer >= speedIncreaseInterval)
         {
             objectSpeed += speedIncrement;
-            if (spawnRate < 3)
-            {
-                spawnRate = spawnRate + 0.2f;
-            }
-
+            if (spawnRate < 3) spawnRate += 0.15f;
             speedIncreaseTimer = 0f;
-            Debug.Log($"Velocidad aumentada a: {objectSpeed}");
         }
     }
 
@@ -99,33 +101,25 @@ public class ExternalRunner : MonoBehaviour
         int randomLaneIndex = random.Next(0, lanes.Length);
         Transform selectedLane = lanes[randomLaneIndex];
 
-        GameObject objectToSpawn = spawnPickup ? pickupPrefab : GetRandomObstacle();
-        GameObject newObject = GetPooledObject(objectToSpawn);
+        GameObject objectToSpawn = spawnPickup ? pickupPrefab : obstaclePrefabs[random.Next(0, obstaclePrefabs.Length)];
+        GameObject newObject = GetPooledObject(objectToSpawn, spawnPickup);
 
         newObject.transform.position = new Vector3(spawnXPosition, selectedLane.position.y, selectedLane.position.z);
-        newObject.transform.rotation = objectToSpawn.transform.rotation;
         newObject.SetActive(true);
 
         ObstacleMover mover = newObject.GetComponent<ObstacleMover>();
-        if (mover == null)
-        {
-            mover = newObject.AddComponent<ObstacleMover>();
-        }
         mover.speed = objectSpeed;
-        mover.moveRight = false;
         mover.destroyXPosition = destroyXPosition;
+        mover.isPickup = spawnPickup;
 
         newObject.tag = spawnPickup ? "Pickup" : "Obstacle";
         Collider collider = newObject.GetComponent<Collider>();
-        if (collider != null)
-        {
-            collider.isTrigger = spawnPickup;
-        }
+        if (collider != null) collider.isTrigger = spawnPickup;
     }
 
-    private GameObject GetPooledObject(GameObject prefab)
+    private GameObject GetPooledObject(GameObject prefab, bool isPickup)
     {
-        if (prefab == pickupPrefab)
+        if (isPickup)
         {
             if (pickupPool.Count > 0)
             {
@@ -133,77 +127,65 @@ public class ExternalRunner : MonoBehaviour
             }
             else
             {
-                
-                GameObject newObj = CreatePooledObject(prefab);
+                GameObject newObj = Instantiate(pickupPrefab);
+                if (newObj.TryGetComponent(out ObstacleMover newMover))
+                {
+                    newMover.runner = this;
+                }
+                if (newObj.TryGetComponent(out PooledObject newPooled))
+                {
+                    newPooled.prefab = pickupPrefab;
+                }
                 return newObj;
             }
         }
         else
         {
-            if (obstaclePools.ContainsKey(prefab) && obstaclePools[prefab].Count > 0)
+            if (obstaclePools.TryGetValue(prefab, out Queue<GameObject> pool))
             {
-                return obstaclePools[prefab].Dequeue();
-            }
-            else
-            {
-                GameObject newObj = CreatePooledObject(prefab);
-                return newObj;
-            }
-        }
-    }
-
-    public void ReturnToPool(GameObject obj)
-    {
-        PooledObject pooled = obj.GetComponent<PooledObject>();
-        if (pooled != null)
-        {
-            obj.SetActive(false);
-
-            if (pooled.prefab == pickupPrefab)
-            {
-                pickupPool.Enqueue(obj);
-            }
-            else
-            {
-                if (obstaclePools.ContainsKey(pooled.prefab))
+                if (pool.Count > 0)
                 {
-                    obstaclePools[pooled.prefab].Enqueue(obj);
+                    return pool.Dequeue();
                 }
             }
+
+            GameObject newObj = Instantiate(prefab);
+            if (newObj.TryGetComponent(out ObstacleMover newMover))
+            {
+                newMover.runner = this;
+            }
+            if (newObj.TryGetComponent(out PooledObject newPooled))
+            {
+                newPooled.prefab = prefab;
+            }
+            return newObj;
+        }
+    }
+
+    public void ReturnToPool(GameObject obj, bool isPickup)
+    {
+        obj.SetActive(false);
+
+        if (isPickup)
+        {
+            pickupPool.Enqueue(obj);
         }
         else
         {
-            Destroy(obj);
-        }
-    }
-
-    private GameObject GetRandomObstacle()
-    {
-        return obstaclePrefabs[random.Next(0, obstaclePrefabs.Length)];
-    }
-}
-
-
-public class PooledObject : MonoBehaviour
-{
-    public GameObject prefab;
-    public ExternalRunner runner;
-
-    private ObstacleMover mover;
-
-    void Awake()
-    {
-        mover = GetComponent<ObstacleMover>();
-    }
-
-    void Update()
-    {
-        if (mover != null)
-        {
-            if ((!mover.moveRight && transform.position.x < mover.destroyXPosition) ||
-                (mover.moveRight && transform.position.x > mover.destroyXPosition))
+            if (obj.TryGetComponent(out PooledObject pooledObj) && pooledObj.prefab != null)
             {
-                runner.ReturnToPool(gameObject);
+                if (obstaclePools.ContainsKey(pooledObj.prefab))
+                {
+                    obstaclePools[pooledObj.prefab].Enqueue(obj);
+                }
+                else
+                {
+                    Debug.LogWarning($"No pool found for prefab: {pooledObj.prefab.name}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Returned object missing PooledObject component or prefab reference");
             }
         }
     }

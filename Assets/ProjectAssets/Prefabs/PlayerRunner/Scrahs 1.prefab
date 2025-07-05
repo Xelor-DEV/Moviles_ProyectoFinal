@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7940173662758900464}
   - component: {fileID: 4690772618059592828}
+  - component: {fileID: 5742204729728780200}
+  - component: {fileID: 835651241468577437}
   m_Layer: 0
   m_Name: Scrahs 1
   m_TagString: Pickup
@@ -54,6 +56,35 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.472873, y: 0.5977178, z: 2.3579237}
   m_Center: {x: 0.47666138, y: 0.24, z: 1.2127737}
+--- !u!114 &5742204729728780200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904952667566897762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc2c0b31537cd94ba16c9425dce0364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  destroyXPosition: -15
+  runner: {fileID: 0}
+  isPickup: 0
+--- !u!114 &835651241468577437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904952667566897762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93dabd3fba51bda47b1b221e016fb038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 8904952667566897762}
 --- !u!1001 &611777677662499196
 PrefabInstance:
   m_ObjectHideFlags: 0

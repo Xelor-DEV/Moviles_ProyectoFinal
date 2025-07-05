@@ -17,7 +17,8 @@ public class Projectile : MonoBehaviour
         {
             hashit = true;
             other.GetComponent<DianaController>().Hit();
-            shooter.ResetShot(); 
+            shooter.ResetShot();
+            AudioManager.Instance.PlaySfx(1);
             Destroy(gameObject);
         }
 

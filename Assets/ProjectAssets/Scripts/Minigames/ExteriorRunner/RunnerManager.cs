@@ -48,7 +48,7 @@ public class RunnerManager : NonPersistentSingleton<RunnerManager>
         timeText.text = $"Time: {Mathf.FloorToInt(survivalTime)}s";
 
         coinTimer += Time.deltaTime;
-        if (coinTimer >= 15f)
+        if (coinTimer >= 8f)
         {
             currentPrismites += 1;
             coinTimer = 0f;

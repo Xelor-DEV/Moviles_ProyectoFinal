@@ -39,7 +39,7 @@ public class TargetGameUIManager : NonPersistentSingleton<TargetGameUIManager>
     public void AddHit()
     {
         hitCount++;
-        currentPrismites += 3;
+        currentPrismites += 1;
         UpdateUI();
     }
 

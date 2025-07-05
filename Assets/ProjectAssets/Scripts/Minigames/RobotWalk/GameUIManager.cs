@@ -87,11 +87,12 @@ public class GameUIManager : NonPersistentSingleton<GameUIManager>
         correctSwipes++;
         correctSwipesSpeed++;
 
-        if (correctSwipes >= 5)
+        if (correctSwipes >= 3)
         {
             pendingPrismites++;
             correctSwipes = 0;
         }
+        AudioManager.Instance.PlaySfx(1);
     }
 
     public void HandleWrongSwipe()
@@ -99,6 +100,7 @@ public class GameUIManager : NonPersistentSingleton<GameUIManager>
         if (gameEnded) return;
 
         currentTime = Mathf.Max(currentTime - 15f, 0f);
+        AudioManager.Instance.PlaySfx(2);
     }
 
     void RestartGame()

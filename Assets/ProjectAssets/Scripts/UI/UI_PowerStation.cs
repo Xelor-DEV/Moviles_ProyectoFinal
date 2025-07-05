@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -10,6 +11,9 @@ public class UI_PowerStation : MonoBehaviour
     [Header("Sprites")]
     [SerializeField] private Sprite connectedSprite;
     [SerializeField] private Sprite disconnectedSprite;
+
+    [Header("Events")]
+    public UnityEvent OnPowerUpdate;
 
     [Header("Dependencies")]
     [SerializeField] private RobotNeeds robotNeeds;
@@ -57,6 +61,8 @@ public class UI_PowerStation : MonoBehaviour
         chargingIcon.sprite = connectedSprite;
 
         AudioManager.Instance.PlaySfx(1);
+
+        OnPowerUpdate?.Invoke();
     }
 
     public void SetDisconnectedState()
@@ -71,6 +77,8 @@ public class UI_PowerStation : MonoBehaviour
         }
 
         AudioManager.Instance.PlaySfx(2);
+
+        OnPowerUpdate?.Invoke();
     }
 
     private void StartCharging()
@@ -108,6 +116,8 @@ public class UI_PowerStation : MonoBehaviour
             {
                 SetDisconnectedState();
             }
+
+            OnPowerUpdate?.Invoke();
         }
 
         if (!resourceManager.CanAffordEnergyCores(1))

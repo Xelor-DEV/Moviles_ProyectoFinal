@@ -1165,7 +1165,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 20
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -3070,6 +3070,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5444369a84a3015488f9c6776b2b709e, type: 3}
   sfxClips:
   - {fileID: 8300000, guid: 0406d23b5af940848abb02bff01c57fc, type: 3}
+  - {fileID: 8300000, guid: dd02ea042ed0ce54cbe21a04014cf75c, type: 3}
+  - {fileID: 8300000, guid: a36e0fc69cb1488409c44139d832b0ba, type: 3}
   audioConfig: {fileID: 11400000, guid: 5d96565883991e341b0b37d12d23ff5c, type: 2}
   playMusicOnStart: 1
   defaultMusicIndex: 0
